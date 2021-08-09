@@ -1,8 +1,9 @@
 import 'package:bottle_cap_gallery/src/views/ui/add_item_view.dart';
+import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_displayer.dart';
-import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ColectionView extends StatefulWidget {
   ColectionView({Key? key}) : super(key: key);
@@ -21,15 +22,7 @@ class _ColectionViewState extends State<ColectionView> {
       appBar: AppBar(
         title: Text('Collection'),
       ),
-      body: GridView.builder(
-        itemCount: _itemCount,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return _itemList[index];
-        },
-      ),
+      body: ItemList(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -57,5 +50,25 @@ class _ColectionViewState extends State<ColectionView> {
     if (result.text != "") {
       _fillItemList(result);
     }*/
+  }
+}
+
+class ItemList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    print("hi, item added");
+
+    var collection = context.watch<Collection>();
+
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemCount: collection.itemList.length,
+      itemBuilder: (BuildContext context, int index) {
+        print(collection.itemList[index].text);
+        return DisplayItem(collection.itemList[index]);
+      },
+    );
   }
 }

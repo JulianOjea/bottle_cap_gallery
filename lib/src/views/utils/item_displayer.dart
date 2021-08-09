@@ -1,5 +1,7 @@
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
+import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DisplayItem extends StatefulWidget {
   final Item item;
@@ -11,60 +13,55 @@ class DisplayItem extends StatefulWidget {
 
 class _DisplayItemState extends State<DisplayItem> {
   late Item _item;
+  /*
   late Image _image;
-  late Color _containerColorOpacity;
-  bool _containerOpacityFlag = false;
   String _text = "";
-  String _displayText = "";
+  */
+  late Color _containerColorOpacity;
   bool _enabledDeleteButton = false;
   bool _displayTextFlag = false;
-
-  _DisplayItemState() {
-    this._item = widget.item;
-    this._text = _item.text;
-    this._image = _item.image;
-  }
+  String _displayText = "";
+  bool _containerOpacityFlag = false;
 
   @override
   void initState() {
     super.initState();
+    _item = widget.item;
     _containerColorOpacity = Colors.black.withOpacity(0);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          color: null,
-          child: _image,
+    return Stack(children: [
+      Container(
+        color: null,
+        child: _item.image,
+      ),
+      Container(
+        color: _containerColorOpacity,
+        child: GestureDetector(
+          onTap: _onTapDisplayItem,
+          onLongPress: () {
+            setState(() {
+              _enabledDeleteButton = true;
+            });
+          },
         ),
-        Container(
-          color: _containerColorOpacity,
-          child: GestureDetector(
-            onTap: _onTapDisplayItem,
-            onLongPress: () {
-              setState(() {
-                _enabledDeleteButton = true;
-              });
-            },
+      ),
+      Container(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          _displayText,
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            fontSize: 30.0,
+            color: Colors.white,
           ),
+          textAlign: TextAlign.center,
         ),
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Text(
-            _displayText,
-            style: TextStyle(
-              fontStyle: FontStyle.italic,
-              fontSize: 30.0,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        _deleteIcon(),
-      ],
-    );
+      ),
+      _deleteIcon(),
+    ]);
   }
 
   _onTapDisplayItem() {
@@ -76,7 +73,7 @@ class _DisplayItemState extends State<DisplayItem> {
       if (_displayTextFlag == false) {
         changeContainerOpacity();
         _displayTextFlag = true;
-        _displayText = _text;
+        _displayText = _item.text;
       } else {
         changeContainerOpacity();
         _displayTextFlag = false;
@@ -97,23 +94,18 @@ class _DisplayItemState extends State<DisplayItem> {
     });
   }
 
-  IconButton deleteItem() {
-    return IconButton(
-        onPressed: () {},
-        icon: Icon(
-          Icons.delete,
-          color: Colors.red,
-          size: 30.0,
-        ));
-  }
-
   Center _deleteIcon() {
+    var collection = context.watch<Collection>();
+
     return Center(
       child: Visibility(
         visible: _enabledDeleteButton,
         child: IconButton(
           onPressed: () {
             if (_enabledDeleteButton) {
+              collection.remove(_item);
+              int hola = collection.itemList.length;
+              print("la lista + " + hola.toString());
               setState(() {
                 _enabledDeleteButton = false;
               });
