@@ -1,8 +1,10 @@
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
+import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:provider/provider.dart';
 
 class AddItem extends StatefulWidget {
   AddItem({Key? key}) : super(key: key);
@@ -97,7 +99,9 @@ class _AddItemState extends State<AddItem> {
   Widget _submitButton(BuildContext context) {
     return OutlinedButton(
         onPressed: () {
-          Navigator.pop(context, _item);
+          var collection = context.read<Collection>();
+          collection.add(_item);
+          Navigator.pop(context, []);
         },
         child: Icon(Icons.ac_unit));
   }

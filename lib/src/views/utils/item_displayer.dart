@@ -1,16 +1,16 @@
+import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:flutter/material.dart';
 
 class DisplayItem extends StatefulWidget {
-  final String _text;
-  final Image _image;
-
-  DisplayItem(this._text, this._image);
+  final Item item;
+  DisplayItem(this.item);
 
   @override
-  _DisplayItemState createState() => _DisplayItemState(_text, _image);
+  _DisplayItemState createState() => _DisplayItemState();
 }
 
 class _DisplayItemState extends State<DisplayItem> {
+  late Item _item;
   late Image _image;
   late Color _containerColorOpacity;
   bool _containerOpacityFlag = false;
@@ -19,7 +19,11 @@ class _DisplayItemState extends State<DisplayItem> {
   bool _enabledDeleteButton = false;
   bool _displayTextFlag = false;
 
-  _DisplayItemState(this._text, this._image);
+  _DisplayItemState() {
+    this._item = widget.item;
+    this._text = _item.text;
+    this._image = _item.image;
+  }
 
   @override
   void initState() {

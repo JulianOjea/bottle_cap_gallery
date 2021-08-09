@@ -39,21 +39,23 @@ class _ColectionViewState extends State<ColectionView> {
     );
   }
 
+  /*
   void _fillItemList(Item item) {
     setState(() {
       _itemCount++;
-      _itemList.add(DisplayItem(item.text, item.image));
+      _itemList.add(DisplayItem(item));
     });
-  }
+  }*/
 
   void _navigateAndReturnNewItem(BuildContext context) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AddItem()),
     );
+    /*
     print(result.text);
     if (result.text != "") {
       _fillItemList(result);
-    }
+    }*/
   }
 }

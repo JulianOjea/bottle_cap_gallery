@@ -2,5 +2,6 @@ import 'package:flutter/material.dart';
 
 class Item {
   String text = "";
-  late Image image = Image(image: NetworkImage(""));
+  Image image = Image(image: NetworkImage(""));
+  int id = -1;
 }
