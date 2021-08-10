@@ -1,3 +1,4 @@
+import 'package:bottle_cap_gallery/src/views/ui/edit_item_view.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,9 @@ class _DisplayItemState extends State<DisplayItem> {
             setState(() {
               _enabledDeleteButton = true;
             });
+          },
+          onDoubleTap: () {
+            _navigateAndEditItem(context, _item);
           },
         ),
       ),
@@ -125,6 +129,13 @@ class _DisplayItemState extends State<DisplayItem> {
           padding: EdgeInsets.zero,
         ),
       ),
+    );
+  }
+
+  void _navigateAndEditItem(BuildContext context, Item item) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditItem(item)),
     );
   }
 }

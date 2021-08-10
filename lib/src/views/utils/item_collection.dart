@@ -17,4 +17,11 @@ class Collection extends ChangeNotifier {
     itemList.remove(item);
     notifyListeners();
   }
+
+  void edit(Item item) {
+    int i = itemList.indexOf(item);
+    itemList[i] = item;
+
+    notifyListeners();
+  }
 }
