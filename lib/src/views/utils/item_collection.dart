@@ -14,8 +14,7 @@ class Collection extends ChangeNotifier {
   }
 
   void remove(Item item) {
-    print("se borra");
-    itemList.removeLast();
+    itemList.remove(item);
     notifyListeners();
   }
 }

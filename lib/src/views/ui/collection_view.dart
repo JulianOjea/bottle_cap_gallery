@@ -13,9 +13,6 @@ class ColectionView extends StatefulWidget {
 }
 
 class _ColectionViewState extends State<ColectionView> {
-  List<DisplayItem> _itemList = [];
-  int _itemCount = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,32 +29,17 @@ class _ColectionViewState extends State<ColectionView> {
     );
   }
 
-  /*
-  void _fillItemList(Item item) {
-    setState(() {
-      _itemCount++;
-      _itemList.add(DisplayItem(item));
-    });
-  }*/
-
   void _navigateAndReturnNewItem(BuildContext context) async {
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AddItem()),
     );
-    /*
-    print(result.text);
-    if (result.text != "") {
-      _fillItemList(result);
-    }*/
   }
 }
 
 class ItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("hi, item added");
-
     var collection = context.watch<Collection>();
 
     return GridView.builder(
@@ -66,8 +48,7 @@ class ItemList extends StatelessWidget {
       ),
       itemCount: collection.itemList.length,
       itemBuilder: (BuildContext context, int index) {
-        print(collection.itemList[index].text);
-        return DisplayItem(collection.itemList[index]);
+        return DisplayItem(collection.itemList[index], index);
       },
     );
   }

@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 
 class DisplayItem extends StatefulWidget {
   final Item item;
-  DisplayItem(this.item);
+  final int index;
+
+  DisplayItem(this.item, this.index);
 
   @override
   _DisplayItemState createState() => _DisplayItemState();
@@ -26,12 +28,14 @@ class _DisplayItemState extends State<DisplayItem> {
   @override
   void initState() {
     super.initState();
-    _item = widget.item;
     _containerColorOpacity = Colors.black.withOpacity(0);
   }
 
   @override
   Widget build(BuildContext context) {
+    var collection = context.watch<Collection>();
+    _item = collection.itemList[widget.index];
+
     return Stack(children: [
       Container(
         color: null,
@@ -104,8 +108,6 @@ class _DisplayItemState extends State<DisplayItem> {
           onPressed: () {
             if (_enabledDeleteButton) {
               collection.remove(_item);
-              int hola = collection.itemList.length;
-              print("la lista + " + hola.toString());
               setState(() {
                 _enabledDeleteButton = false;
               });
