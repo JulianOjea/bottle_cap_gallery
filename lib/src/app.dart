@@ -10,6 +10,7 @@ class App extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => Collection(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Material App',
         home: ColectionView(),
       ),

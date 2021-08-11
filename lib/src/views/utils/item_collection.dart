@@ -24,4 +24,9 @@ class Collection extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void sortByText() {
+    itemList.sort((a, b) => a.text.compareTo(b.text));
+    notifyListeners();
+  }
 }

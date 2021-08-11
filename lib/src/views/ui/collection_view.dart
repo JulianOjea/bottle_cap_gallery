@@ -17,6 +17,13 @@ class _ColectionViewState extends State<ColectionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                _sortByText(context);
+              },
+              icon: Icon(Icons.sort)),
+        ],
         title: Text('Collection'),
       ),
       body: ItemList(),
@@ -34,6 +41,11 @@ class _ColectionViewState extends State<ColectionView> {
       context,
       MaterialPageRoute(builder: (context) => AddItem()),
     );
+  }
+
+  void _sortByText(BuildContext context) {
+    var collection = context.read<Collection>();
+    collection.sortByText();
   }
 }
 
