@@ -17,6 +17,13 @@ class _ColectionViewState extends State<ColectionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            var collection = context.read<Collection>();
+            collection.readTest();
+          },
+          icon: Icon(Icons.zoom_out),
+        ),
         actions: [
           IconButton(
               onPressed: () {

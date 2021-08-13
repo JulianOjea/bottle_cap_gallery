@@ -14,7 +14,7 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-  Item _item = Item();
+  Item _item = Item("", Image(image: NetworkImage("")));
   Image _displayimage = Image.memory(kTransparentImage);
 
   @override

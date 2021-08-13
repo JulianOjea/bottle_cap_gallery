@@ -22,11 +22,11 @@ class _AddEditViewState extends State<AddEditView> {
       appBar: AppBar(
         title: Text("Add an image"),
       ),
-      body: add_edit_view(context, widget.item, widget.submitButton),
+      body: addEditView(context, widget.item, widget.submitButton),
     );
   }
 
-  SingleChildScrollView add_edit_view(
+  SingleChildScrollView addEditView(
       BuildContext context, Item item, OutlinedButton submitButton) {
     return SingleChildScrollView(
       child: Center(
