@@ -14,7 +14,7 @@ class Collection extends ChangeNotifier {
 
   void add(Item item) {
     itemList.add(item);
-    keyValueManager.save(item.key.toString(), item);
+    keyValueManager.save(item.id.toString(), item);
     notifyListeners();
   }
 
@@ -32,15 +32,6 @@ class Collection extends ChangeNotifier {
 
   void sortByText() {
     itemList.sort((a, b) => a.text.compareTo(b.text));
-    notifyListeners();
-  }
-
-  void readTest() async {
-    print("111until here it works!!");
-    Item dataItem = Item.fromJson(await keyValueManager
-        .read(itemList[Random().nextInt(itemList.length)].key.toString()));
-    print("until here it works!!");
-    itemList.add(dataItem);
     notifyListeners();
   }
 }

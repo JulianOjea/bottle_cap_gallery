@@ -19,8 +19,10 @@ class _ColectionViewState extends State<ColectionView> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
+            /*
             var collection = context.read<Collection>();
             collection.readTest();
+            */
           },
           icon: Icon(Icons.zoom_out),
         ),
