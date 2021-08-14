@@ -1,8 +1,7 @@
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
-import 'package:sqflite/sqflite.dart';
-import 'dart:async';
 
 import 'package:sqflite/sqflite.dart';
+import 'dart:async';
 import 'package:path/path.dart';
 
 class SQFliteCollection {
@@ -40,5 +39,25 @@ class SQFliteCollection {
     final List<Map<String, Object?>> queryResult =
         await db.query('mytemptable');
     return queryResult.map((e) => Item.fromMap(e)).toList();
+  }
+
+  Future<void> deleteItem(int id) async {
+    final db = await initializeDB();
+    await db.delete(
+      'mytemptable',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+  }
+
+  Future<void> updateItem(Item item) async {
+    final Database db = await initializeDB();
+
+    await db.update(
+      'mytemptable',
+      item.toMap(),
+      where: 'id = ?',
+      whereArgs: [item.id],
+    );
   }
 }
