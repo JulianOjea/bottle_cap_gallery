@@ -1,10 +1,12 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class EditItem extends StatefulWidget {
   final Item item;
@@ -33,7 +35,7 @@ class _EditItemState extends State<EditItem> {
                 SizedBox(
                   height: 20.0,
                 ),
-                _imageInput(widget.item.image),
+                _imageInput(Image.memory(widget.item.image)),
                 SizedBox(
                   height: 20.0,
                 ),
@@ -74,13 +76,18 @@ class _EditItemState extends State<EditItem> {
     );
   }
 
-  _setItemImage() {
-    int r = Random().nextInt(200);
-    widget.item.image =
-        Image(image: NetworkImage("https://picsum.photos/id/$r/300/300"));
+  _setItemImage() async {
+    widget.item.image = await _getNetworkImage();
     setState(() {
-      _imageInput(widget.item.image);
+      _imageInput(Image.memory(widget.item.image));
     });
+  }
+
+  Future<Uint8List> _getNetworkImage() async {
+    int r = Random().nextInt(200);
+    http.Response response =
+        await http.get(Uri.parse("https://picsum.photos/id/$r/300/300"));
+    return response.bodyBytes;
   }
 
   Widget _textInput(String text) {

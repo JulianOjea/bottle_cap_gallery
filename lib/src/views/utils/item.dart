@@ -1,13 +1,12 @@
 import 'dart:convert';
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
 class Item {
-  String text;
-  Image image;
   int id;
+  String text;
+  Uint8List image;
 
   Item({required this.id, required this.text, required this.image});
 
@@ -17,6 +16,7 @@ class Item {
         image = Image.memory(
             Uint8List.fromList(json['image'].toString().codeUnits));
 */
+/*
   Map<String, dynamic> toJson() => {
         'text': text,
         'image': image.toString(),
@@ -31,5 +31,15 @@ class Item {
       base64Decode(base64String),
       fit: BoxFit.fill,
     );
-  }
+  }*/
+
+  Item.fromMap(Map<String, dynamic> res)
+      : id = res["id"],
+        text = res["text"],
+        image = res["image"];
+
+  Map<String, dynamic> toMap() => {
+        'text': text,
+        'image': image,
+      };
 }

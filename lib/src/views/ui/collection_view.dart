@@ -1,3 +1,4 @@
+import 'package:bottle_cap_gallery/src/business_logic/services/database_services/sqflite_collection.dart';
 import 'package:bottle_cap_gallery/src/views/ui/add_item_view.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_displayer.dart';
@@ -13,16 +14,23 @@ class ColectionView extends StatefulWidget {
 }
 
 class _ColectionViewState extends State<ColectionView> {
+  late SQFliteCollection handler;
+
+  @override
+  void initState() {
+    super.initState();
+    this.handler = SQFliteCollection();
+    this.handler.initializeDB();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            /*
             var collection = context.read<Collection>();
             collection.readTest();
-            */
           },
           icon: Icon(Icons.zoom_out),
         ),

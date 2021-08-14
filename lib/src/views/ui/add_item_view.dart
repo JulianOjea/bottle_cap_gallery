@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:bottle_cap_gallery/src/business_logic/services/database_services/sqflite_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 
@@ -5,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class AddItem extends StatefulWidget {
   AddItem({Key? key}) : super(key: key);
@@ -14,7 +18,7 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-  Item _item = Item(text: "", image: Image(image: NetworkImage("")), id: -1);
+  Item _item = Item(text: "", image: Uint8List(0), id: -1);
   Image _displayimage = Image.memory(kTransparentImage);
 
   @override
@@ -87,13 +91,19 @@ class _AddItemState extends State<AddItem> {
     );
   }
 
-  _setItemImage() {
-    int r = Random().nextInt(200);
-    this._item.image =
-        Image(image: NetworkImage("https://picsum.photos/id/$r/300/300"));
+  _setItemImage() async {
+    this._item.image = await _getNetworkImage();
+
     setState(() {
-      this._displayimage = this._item.image;
+      this._displayimage = Image.memory(_item.image);
     });
+  }
+
+  Future<Uint8List> _getNetworkImage() async {
+    int r = Random().nextInt(200);
+    http.Response response =
+        await http.get(Uri.parse("https://picsum.photos/id/$r/300/300"));
+    return response.bodyBytes;
   }
 
   Widget _submitButton(BuildContext context) {

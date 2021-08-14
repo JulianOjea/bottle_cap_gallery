@@ -35,7 +35,7 @@ class _AddEditViewState extends State<AddEditView> {
             SizedBox(
               height: 20.0,
             ),
-            _imageInput(item.image),
+            _imageInput(Image.memory(item.image)),
             SizedBox(
               height: 20.0,
             ),
@@ -78,10 +78,10 @@ class _AddEditViewState extends State<AddEditView> {
 
   _setItemImage() {
     int r = Random().nextInt(200);
-    widget.item.image =
-        Image(image: NetworkImage("https://picsum.photos/id/$r/300/300"));
+    //widget.item.image =
+    //  Image(image: NetworkImage("https://picsum.photos/id/$r/300/300"));
     setState(() {
-      _imageInput(widget.item.image);
+      //_imageInput(widget.item.image);
     });
   }
 

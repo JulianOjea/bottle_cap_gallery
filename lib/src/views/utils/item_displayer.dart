@@ -40,7 +40,7 @@ class _DisplayItemState extends State<DisplayItem> {
     return Stack(children: [
       Container(
         color: null,
-        child: _item.image,
+        child: Image.memory(_item.image),
       ),
       Container(
         color: _containerColorOpacity,
