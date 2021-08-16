@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +75,7 @@ class _AddEditViewState extends State<AddEditView> {
   }
 
   _setItemImage() {
-    int r = Random().nextInt(200);
+    //int r = Random().nextInt(200);
     //widget.item.image =
     //  Image(image: NetworkImage("https://picsum.photos/id/$r/300/300"));
     setState(() {

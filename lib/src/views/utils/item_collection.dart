@@ -1,11 +1,9 @@
 import 'package:bottle_cap_gallery/src/business_logic/services/database_services/sqflite_collection.dart';
-import 'package:bottle_cap_gallery/src/business_logic/services/store_key_value_on_disk_manager/key_value_manager.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:flutter/foundation.dart';
 
 class Collection extends ChangeNotifier {
   late Collection _collection;
-  KeyValueManager keyValueManager = KeyValueManager();
 
   SQFliteCollection handler = SQFliteCollection();
 

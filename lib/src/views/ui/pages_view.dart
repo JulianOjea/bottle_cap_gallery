@@ -4,25 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Pages extends StatelessWidget {
-  final PageController controller = PageController(initialPage: 1);
+  final PageController controller = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: PageView(
-        scrollDirection: Axis.horizontal,
-        controller: controller,
-        children: <Widget>[
-          Center(
-            child: Text('First Page'),
+    return PageView(
+      scrollDirection: Axis.horizontal,
+      controller: controller,
+      children: <Widget>[
+        Center(
+          child: Text(
+            'First Page',
+            style: TextStyle(color: Colors.amber),
           ),
-          Center(
-            child: Expanded(
-              child: ItemList(),
-            ),
+        ),
+        Center(
+          child: Column(
+            children: [AppBar(), Expanded(child: ItemList())],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

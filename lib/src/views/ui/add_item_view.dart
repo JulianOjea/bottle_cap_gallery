@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:bottle_cap_gallery/src/business_logic/services/database_services/sqflite_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 
