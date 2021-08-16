@@ -1,5 +1,6 @@
 import 'package:bottle_cap_gallery/src/business_logic/services/database_services/sqflite_collection.dart';
 import 'package:bottle_cap_gallery/src/views/ui/add_item_view.dart';
+import 'package:bottle_cap_gallery/src/views/ui/pages_view.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_displayer.dart';
 
@@ -25,31 +26,37 @@ class _ColectionViewState extends State<ColectionView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            var collection = context.read<Collection>();
-            collection.readTest();
-          },
-          icon: Icon(Icons.zoom_out),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                _sortByText(context);
-              },
-              icon: Icon(Icons.sort)),
-        ],
-        title: Text('Collection'),
-      ),
-      body: ItemList(),
-      floatingActionButton: FloatingActionButton(
+    return Column(
+      children: [
+        _appBar(),
+        Pages(),
+      ],
+      /* floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
           _navigateAndReturnNewItem(context);
         },
+      ), */
+    );
+  }
+
+  _appBar() {
+    return AppBar(
+      leading: IconButton(
+        onPressed: () {
+          var collection = context.read<Collection>();
+          collection.readTest();
+        },
+        icon: Icon(Icons.zoom_out),
       ),
+      actions: [
+        IconButton(
+            onPressed: () {
+              _sortByText(context);
+            },
+            icon: Icon(Icons.sort)),
+      ],
+      title: Text('Collection'),
     );
   }
 
