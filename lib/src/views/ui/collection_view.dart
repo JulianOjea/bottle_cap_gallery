@@ -4,6 +4,7 @@ import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_displayer.dart';
 
 import 'package:flutter/material.dart';
+//import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ColectionView extends StatefulWidget {
@@ -14,7 +15,8 @@ class ColectionView extends StatefulWidget {
 }
 
 class _ColectionViewState extends State<ColectionView> {
-  final PageController controller = PageController(initialPage: 0);
+  final PageController controller = PageController(initialPage: 1);
+  //int _index = 1;
   late SQFliteCollection handler;
 
   @override
@@ -32,13 +34,13 @@ class _ColectionViewState extends State<ColectionView> {
         child: PageView(
           scrollDirection: Axis.horizontal,
           controller: controller,
+          onPageChanged: (index) {
+            setState(() {
+              //_index = index;
+            });
+          },
           children: <Widget>[
-            Center(
-              child: Text(
-                'First Page',
-                style: TextStyle(color: Colors.amber),
-              ),
-            ),
+            AddItem(),
             _customScrollView(),
           ],
         ),
@@ -54,6 +56,22 @@ class _ColectionViewState extends State<ColectionView> {
       ],
     );
   }
+
+  /* _test() {
+    final ImagePicker _picker = ImagePicker();
+    if (_index == 0) {
+      FutureBuilder(
+          future: _picker.pickImage(source: ImageSource.camera),
+          builder: (context, snapshot) {
+            return Container(
+              color: Colors.green,
+            );
+          });
+    }
+    return Container(
+      color: Colors.purple,
+    );
+  } */
 }
 
 class ItemList extends StatelessWidget {
@@ -114,10 +132,10 @@ class _GridAppBar extends StatelessWidget {
     );
   }
 
-  void _sortByText(BuildContext context) {
+  /* void _sortByText(BuildContext context) {
     var collection = context.read<Collection>();
     collection.sortByText();
-  }
+  } */
 
   void _navigateAndReturnNewItem(BuildContext context) async {
     await Navigator.push(
