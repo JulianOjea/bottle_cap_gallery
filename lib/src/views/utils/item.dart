@@ -2,41 +2,45 @@ import 'dart:typed_data';
 
 class Item {
   int id;
-  String text;
+
+  String brandName;
+  String type;
+  String description;
+  String country;
+  String city;
+  int releaseDate;
+
   Uint8List image;
 
-  Item({required this.id, required this.text, required this.image});
+  String folder;
+  DateTime creationDate;
 
-/*
-  Item.fromJson(Map<String, dynamic> json)
-      : text = json['text'],
-        image = Image.memory(
-            Uint8List.fromList(json['image'].toString().codeUnits));
-*/
-/*
-  Map<String, dynamic> toJson() => {
-        'text': text,
-        'image': image.toString(),
-      };
-
-  String base64String(Uint8List data) {
-    return base64Encode(data);
-  }
-
-  Image imageFromBase64String(String base64String) {
-    return Image.memory(
-      base64Decode(base64String),
-      fit: BoxFit.fill,
-    );
-  }*/
+  Item(
+      {required this.id,
+      required this.brandName,
+      required this.type,
+      required this.description,
+      required this.country,
+      required this.city,
+      required this.releaseDate,
+      required this.image,
+      required this.folder,
+      required this.creationDate});
 
   Item.fromMap(Map<String, dynamic> res)
       : id = res["id"],
-        text = res["text"],
-        image = res["image"];
+        brandName = res["text"],
+        image = res["image"],
+        type = "",
+        description = "",
+        country = "",
+        city = "",
+        releaseDate = -1,
+        folder = "",
+        creationDate = DateTime.now();
 
   Map<String, dynamic> toMap() => {
-        'text': text,
+        'text': brandName,
         'image': image,
       };
 }

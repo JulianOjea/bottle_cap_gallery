@@ -13,7 +13,9 @@ class Collection extends ChangeNotifier {
 
   void add(Item item) async {
     int resultId = await handler.insertItem(item);
-    print("Item " + item.text + " with id $resultId was inserted succesfully");
+    print("Item " +
+        item.brandName +
+        " with id $resultId was inserted succesfully");
     item.id = resultId;
     itemList.add(item);
     notifyListeners();
@@ -23,7 +25,8 @@ class Collection extends ChangeNotifier {
     itemList.remove(item);
     handler.deleteItem(item.id);
     int itemId = item.id;
-    print("Item " + item.text + " with id $itemId was removed succesfully");
+    print(
+        "Item " + item.brandName + " with id $itemId was removed succesfully");
     notifyListeners();
   }
 
@@ -32,12 +35,12 @@ class Collection extends ChangeNotifier {
     handler.updateItem(item);
     itemList[i] = item;
     int itemId = item.id;
-    print("Item " + item.text + " with id $itemId was edited succesfully");
+    print("Item " + item.brandName + " with id $itemId was edited succesfully");
     notifyListeners();
   }
 
   void sortByText() {
-    itemList.sort((a, b) => a.text.compareTo(b.text));
+    itemList.sort((a, b) => a.brandName.compareTo(b.brandName));
     notifyListeners();
   }
 
@@ -47,7 +50,9 @@ class Collection extends ChangeNotifier {
 
     for (var item in retrievedList) {
       itemId = item.id;
-      print("Item " + item.text + " with id $itemId was retrieved succesfully");
+      print("Item " +
+          item.brandName +
+          " with id $itemId was retrieved succesfully");
       itemList.add(item);
     }
 

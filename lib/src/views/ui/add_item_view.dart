@@ -4,7 +4,6 @@ import 'package:bottle_cap_gallery/src/business_logic/assets/countries_list.dart
 import 'package:bottle_cap_gallery/src/business_logic/assets/drink_list.dart';
 import 'package:bottle_cap_gallery/src/business_logic/assets/list_iface.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
-import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,7 +21,18 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-  Item _item = Item(text: "", image: Uint8List(0), id: -1);
+  Item _item = Item(
+      brandName: '',
+      city: '',
+      country: '',
+      creationDate: DateTime.now(),
+      description: '',
+      folder: '',
+      id: -1,
+      image: Uint8List(0),
+      releaseDate: -1,
+      type: '');
+
   Image _displayimage = Image.memory(kTransparentImage);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -36,23 +46,25 @@ class _AddItemState extends State<AddItem> {
             children: [
               _imageInput(),
               //_sizedBox(),
-              _textInput("Nombre"),
+              _textInput("Nombre", "brandName"),
               //_sizedBox(),
               _typeAheadFormField(DrinkService(), "Bebida"),
               //_sizedBox(),
-              _textInput("Descripción"),
+              _textInput("Descripción", "Description"),
               //_sizedBox(),
               Row(
                 children: [
                   Expanded(
                     child: _typeAheadFormField(CountriesService(), "País"),
                   ),
-                  Expanded(child: _textInput("Ciudad")),
+                  Expanded(child: _textInput("Ciudad", "City")),
                 ],
               ),
               //_sizedBox(),
               _intInput("Fecha de emisión (año)"),
-              //_sizedBox(),
+              SizedBox(
+                height: 10.0,
+              ),
               _submitButton(context),
             ],
           ),
@@ -84,7 +96,7 @@ class _AddItemState extends State<AddItem> {
     );
   }
 
-  Widget _textInput(String labelText) {
+  Widget _textInput(String labelText, String valueToChange) {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
@@ -92,7 +104,13 @@ class _AddItemState extends State<AddItem> {
           labelText: labelText,
         ),
         onChanged: (value) {
-          _item.text = value;
+          if (valueToChange == "brandName") {
+            _item.brandName = value;
+          } else if (valueToChange == "description") {
+            _item.description = value;
+          } else if (valueToChange == "city") {
+            _item.city = value;
+          }
         },
       ),
     );
@@ -106,7 +124,7 @@ class _AddItemState extends State<AddItem> {
           labelText: labelText,
         ),
         onChanged: (value) {
-          _item.text = value;
+          _item.releaseDate = int.parse(value);
         },
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         validator: (value) {
@@ -137,14 +155,14 @@ class _AddItemState extends State<AddItem> {
   }
 
   Widget _submitButton(BuildContext context) {
-    return OutlinedButton(
+    return ElevatedButton(
         onPressed: () {
           if (this._formKey.currentState!.validate()) ;
           /*
           var collection = context.read<Collection>();
           collection.add(_item);
-          Navigator.pop(context, []);
           */
+          Navigator.pop(context, []);
         },
         child: Icon(Icons.ac_unit));
   }
@@ -163,6 +181,12 @@ class _AddItemState extends State<AddItem> {
         return list.getSuggestions(pattern);
       },
       itemBuilder: (context, String suggestion) {
+        if (labelText == "Bebida") {
+          print("esta es la sugestion" + suggestion);
+          _item.type = suggestion;
+        } else if (labelText == "País") {
+          _item.country = suggestion;
+        }
         return ListTile(
           title: Text(suggestion),
         );

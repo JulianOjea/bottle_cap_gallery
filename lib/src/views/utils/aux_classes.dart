@@ -37,7 +37,7 @@ class _AddEditViewState extends State<AddEditView> {
             SizedBox(
               height: 20.0,
             ),
-            _textInput(item.text),
+            _textInput(item.brandName),
             SizedBox(
               height: 20.0,
             ),
@@ -92,7 +92,7 @@ class _AddEditViewState extends State<AddEditView> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         ),
         onChanged: (value) {
-          widget.item.text = value;
+          widget.item.brandName = value;
         },
       ),
     );

@@ -81,7 +81,7 @@ class _DisplayItemState extends State<DisplayItem> {
       if (_displayTextFlag == false) {
         changeContainerOpacity();
         _displayTextFlag = true;
-        _displayText = _item.text;
+        _displayText = _item.brandName;
       } else {
         changeContainerOpacity();
         _displayTextFlag = false;

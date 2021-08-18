@@ -39,7 +39,7 @@ class _EditItemState extends State<EditItem> {
                 SizedBox(
                   height: 20.0,
                 ),
-                _textInput(widget.item.text),
+                _textInput(widget.item.brandName),
                 SizedBox(
                   height: 20.0,
                 ),
@@ -99,7 +99,7 @@ class _EditItemState extends State<EditItem> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         ),
         onChanged: (value) {
-          widget.item.text = value;
+          widget.item.brandName = value;
         },
       ),
     );
