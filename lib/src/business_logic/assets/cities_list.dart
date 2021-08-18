@@ -1,7 +1,6 @@
 import 'package:bottle_cap_gallery/src/business_logic/assets/list_iface.dart';
-import 'package:flutter/cupertino.dart';
 
-class CitiesService implements PretictiveListDataManager {
+class CitiesService implements PredictiveListDataManager {
   final List<String> dataList = [
     'Beirut',
     'Damascus',
@@ -19,10 +18,13 @@ class CitiesService implements PretictiveListDataManager {
   ];
 
   List<String> getSuggestions(String query) {
-    List<String> matches = <String>[];
-    matches.addAll(dataList);
+    if (query != "") {
+      List<String> matches = <String>[];
+      matches.addAll(dataList);
 
-    matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
-    return matches;
+      matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
+      return matches;
+    } else
+      return [];
   }
 }

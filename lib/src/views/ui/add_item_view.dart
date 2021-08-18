@@ -1,12 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:bottle_cap_gallery/src/business_logic/assets/cities_list.dart';
+import 'package:bottle_cap_gallery/src/business_logic/assets/countries_list.dart';
 import 'package:bottle_cap_gallery/src/business_logic/assets/drink_list.dart';
 import 'package:bottle_cap_gallery/src/business_logic/assets/list_iface.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
-import 'package:country_list_pick/country_list_pick.dart';
-import 'package:country_picker/country_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -43,9 +41,9 @@ class _AddItemState extends State<AddItem> {
               //_sizedBox(),
               Row(
                 children: [
-                  //Expanded(child: _getCountry()),
                   Expanded(
-                      child: PredictiveTextInput(CitiesService(), "Ciudad")),
+                      child: PredictiveTextInput(CountriesService(), "País")),
+                  Expanded(child: _textInput("Ciudad")),
                 ],
               ),
               //_sizedBox(),
@@ -136,7 +134,7 @@ class _AddItemState extends State<AddItem> {
 }
 
 class PredictiveTextInput extends StatelessWidget {
-  final PretictiveListDataManager _list;
+  final PredictiveListDataManager _list;
   final String _labelText;
   final TextEditingController _typeAheadController = TextEditingController();
 
@@ -145,6 +143,9 @@ class PredictiveTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TypeAheadFormField(
+      keepSuggestionsOnLoading: false,
+      hideOnLoading: true,
+      hideOnError: true,
       textFieldConfiguration: TextFieldConfiguration(
           controller: this._typeAheadController,
           decoration: InputDecoration(labelText: _labelText)),

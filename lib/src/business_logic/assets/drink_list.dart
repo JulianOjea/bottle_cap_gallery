@@ -1,6 +1,6 @@
 import 'package:bottle_cap_gallery/src/business_logic/assets/list_iface.dart';
 
-class DrinkService implements PretictiveListDataManager {
+class DrinkService implements PredictiveListDataManager {
   final List<String> dataList = [
     'Aguardiente',
     'Alcopop',
@@ -19,8 +19,8 @@ class DrinkService implements PretictiveListDataManager {
     'Cognac y Brandy',
     'Gaseosa',
     'Ginebra',
-    'Jarabe'
-        'Kvas',
+    'Jarabe',
+    'Kvas',
     'Leche',
     'Licor',
     'Malta',
@@ -32,15 +32,18 @@ class DrinkService implements PretictiveListDataManager {
     'Té',
     'Vino',
     'Vino Espumoso',
-    'Yogur'
-        'Zumo',
+    'Yogur',
+    'Zumo',
   ];
 
   List<String> getSuggestions(String query) {
-    List<String> matches = <String>[];
-    matches.addAll(dataList);
+    if (query != "") {
+      List<String> matches = <String>[];
+      matches.addAll(dataList);
 
-    matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
-    return matches;
+      matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
+      return matches;
+    } else
+      return [];
   }
 }
