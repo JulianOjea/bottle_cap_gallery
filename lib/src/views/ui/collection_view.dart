@@ -40,7 +40,7 @@ class _ColectionViewState extends State<ColectionView> {
             });
           },
           children: <Widget>[
-            AddItem(),
+            AddItem(onButtonTapped),
             _customScrollView(),
           ],
         ),
@@ -57,6 +57,13 @@ class _ColectionViewState extends State<ColectionView> {
     );
   }
 
+  void onButtonTapped(int index) {
+    controller.animateToPage(
+      index,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
   /* _test() {
     final ImagePicker _picker = ImagePicker();
     if (_index == 0) {
@@ -72,6 +79,7 @@ class _ColectionViewState extends State<ColectionView> {
       color: Colors.purple,
     );
   } */
+
 }
 
 class ItemList extends StatelessWidget {
@@ -121,13 +129,13 @@ class _GridAppBar extends StatelessWidget {
         },
         icon: Icon(Icons.zoom_out),
       ),
-      actions: [
+      /* actions: [
         IconButton(
             onPressed: () {
               _navigateAndReturnNewItem(context);
             },
             icon: Icon(Icons.sort)),
-      ],
+      ], */
       title: Text('Collection'),
     );
   }
@@ -137,10 +145,10 @@ class _GridAppBar extends StatelessWidget {
     collection.sortByText();
   } */
 
-  void _navigateAndReturnNewItem(BuildContext context) async {
+  /* void _navigateAndReturnNewItem(BuildContext context) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AddItem()),
     );
-  }
+  } */
 }

@@ -14,8 +14,8 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class AddItem extends StatefulWidget {
-  AddItem({Key? key}) : super(key: key);
-
+  final void Function(int) onButtonTapped;
+  AddItem(this.onButtonTapped);
   @override
   _AddItemState createState() => _AddItemState();
 }
@@ -39,36 +39,41 @@ class _AddItemState extends State<AddItem> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              _imageInput(),
-              //_sizedBox(),
-              _textInput("Nombre", "brandName"),
-              //_sizedBox(),
-              _typeAheadFormField(DrinkService(), "Bebida"),
-              //_sizedBox(),
-              _textInput("Descripción", "Description"),
-              //_sizedBox(),
-              Row(
-                children: [
-                  Expanded(
-                    child: _typeAheadFormField(CountriesService(), "País"),
-                  ),
-                  Expanded(child: _textInput("Ciudad", "City")),
-                ],
-              ),
-              //_sizedBox(),
-              _intInput("Fecha de emisión (año)"),
-              SizedBox(
-                height: 10.0,
-              ),
-              _submitButton(context),
-            ],
+      child: ListView(
+        children: [
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                _imageInput(),
+                //_sizedBox(),
+                _textInput("Nombre", "brandName"),
+                //_sizedBox(),
+                _typeAheadFormField(DrinkService(), "Bebida"),
+                //_sizedBox(),
+                _textInput("Descripción", "Description"),
+                //_sizedBox(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _typeAheadFormField(CountriesService(), "País"),
+                    ),
+                    Expanded(child: _textInput("Ciudad", "City")),
+                  ],
+                ),
+                //_sizedBox(),
+                _intInput("Fecha de emisión (año)"),
+                SizedBox(
+                  height: 10.0,
+                ),
+                _submitButton(context),
+              ],
+            ),
           ),
-        ),
+          SizedBox(
+            height: 500,
+          ),
+        ],
       ),
     );
   }
@@ -162,7 +167,8 @@ class _AddItemState extends State<AddItem> {
           var collection = context.read<Collection>();
           collection.add(_item);
           */
-          Navigator.pop(context, []);
+          widget.onButtonTapped(1);
+          print("hola mi buen amigo");
         },
         child: Icon(Icons.ac_unit));
   }
@@ -182,7 +188,6 @@ class _AddItemState extends State<AddItem> {
       },
       itemBuilder: (context, String suggestion) {
         if (labelText == "Bebida") {
-          print("esta es la sugestion" + suggestion);
           _item.type = suggestion;
         } else if (labelText == "País") {
           _item.country = suggestion;
@@ -190,6 +195,9 @@ class _AddItemState extends State<AddItem> {
         return ListTile(
           title: Text(suggestion),
         );
+      },
+      transitionBuilder: (context, suggestionsBox, controller) {
+        return suggestionsBox;
       },
       onSuggestionSelected: (String suggestion) {
         typeAheadController.text = suggestion;
