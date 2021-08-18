@@ -27,4 +27,10 @@ class CitiesService implements PredictiveListDataManager {
     } else
       return [];
   }
+
+  @override
+  String validate(String? value) {
+    // TODO: implement validate
+    throw UnimplementedError();
+  }
 }

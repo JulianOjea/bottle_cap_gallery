@@ -46,4 +46,13 @@ class DrinkService implements PredictiveListDataManager {
     } else
       return [];
   }
+
+  @override
+  String? validate(String? value) {
+    if (value != "") {
+      if (!dataList.contains(value)) {
+        return "Escribe una bebida válida";
+      }
+    }
+  }
 }

@@ -7,6 +7,7 @@ import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:math';
 import 'package:transparent_image/transparent_image.dart';
@@ -23,31 +24,34 @@ class AddItem extends StatefulWidget {
 class _AddItemState extends State<AddItem> {
   Item _item = Item(text: "", image: Uint8List(0), id: -1);
   Image _displayimage = Image.memory(kTransparentImage);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: SingleChildScrollView(
-        child: Center(
+        child: Form(
+          key: _formKey,
           child: Column(
             children: [
               _imageInput(),
               //_sizedBox(),
               _textInput("Nombre"),
               //_sizedBox(),
-              PredictiveTextInput(DrinkService(), "Bebidas"),
+              _typeAheadFormField(DrinkService(), "Bebida"),
               //_sizedBox(),
               _textInput("Descripción"),
               //_sizedBox(),
               Row(
                 children: [
                   Expanded(
-                      child: PredictiveTextInput(CountriesService(), "País")),
+                    child: _typeAheadFormField(CountriesService(), "País"),
+                  ),
                   Expanded(child: _textInput("Ciudad")),
                 ],
               ),
               //_sizedBox(),
-              _textInput("Fecha de emisión (año)"),
+              _intInput("Fecha de emisión (año)"),
               //_sizedBox(),
               _submitButton(context),
             ],
@@ -83,12 +87,35 @@ class _AddItemState extends State<AddItem> {
   Widget _textInput(String labelText) {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 10),
-      child: TextField(
+      child: TextFormField(
         decoration: InputDecoration(
           labelText: labelText,
         ),
         onChanged: (value) {
           _item.text = value;
+        },
+      ),
+    );
+  }
+
+  Widget _intInput(String labelText) {
+    return Container(
+      //padding: EdgeInsets.symmetric(horizontal: 10),
+      child: TextFormField(
+        decoration: InputDecoration(
+          labelText: labelText,
+        ),
+        onChanged: (value) {
+          _item.text = value;
+        },
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        validator: (value) {
+          if (value != "") {
+            int comparator = int.parse(value!);
+            if (comparator < 1892 || comparator > DateTime.now().year) {
+              return "Escribe un año valido";
+            }
+          }
         },
       ),
     );
@@ -112,45 +139,28 @@ class _AddItemState extends State<AddItem> {
   Widget _submitButton(BuildContext context) {
     return OutlinedButton(
         onPressed: () {
+          if (this._formKey.currentState!.validate()) ;
+          /*
           var collection = context.read<Collection>();
           collection.add(_item);
           Navigator.pop(context, []);
+          */
         },
         child: Icon(Icons.ac_unit));
   }
 
-  /*  Widget _getCountry(BuildContext context) {
-    showCountryPicker(
-      context: context,
-      onSelect: (Country country) {
-        print('Select country: ${country.displayName}');
-      },
-    );
-  } */
-/* 
-  SizedBox _sizedBox() {
-    return SizedBox(height: 10.0);
-  } */
-}
+  _typeAheadFormField(PredictiveListDataManager list, String labelText) {
+    final TextEditingController typeAheadController = TextEditingController();
 
-class PredictiveTextInput extends StatelessWidget {
-  final PredictiveListDataManager _list;
-  final String _labelText;
-  final TextEditingController _typeAheadController = TextEditingController();
-
-  PredictiveTextInput(this._list, this._labelText);
-
-  @override
-  Widget build(BuildContext context) {
     return TypeAheadFormField(
       keepSuggestionsOnLoading: false,
       hideOnLoading: true,
       hideOnError: true,
       textFieldConfiguration: TextFieldConfiguration(
-          controller: this._typeAheadController,
-          decoration: InputDecoration(labelText: _labelText)),
+          controller: typeAheadController,
+          decoration: InputDecoration(labelText: labelText)),
       suggestionsCallback: (pattern) {
-        return _list.getSuggestions(pattern);
+        return list.getSuggestions(pattern);
       },
       itemBuilder: (context, String suggestion) {
         return ListTile(
@@ -158,7 +168,10 @@ class PredictiveTextInput extends StatelessWidget {
         );
       },
       onSuggestionSelected: (String suggestion) {
-        this._typeAheadController.text = suggestion;
+        typeAheadController.text = suggestion;
+      },
+      validator: (value) {
+        return list.validate(value);
       },
     );
   }
