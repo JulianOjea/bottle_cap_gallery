@@ -29,18 +29,25 @@ class Item {
 
   Item.fromMap(Map<String, dynamic> res)
       : id = res["id"],
-        brandName = res["text"],
+        brandName = res["brandname"],
         image = res["image"],
-        type = "",
-        description = "",
-        country = "",
-        city = "",
-        releaseDate = -1,
-        folder = "",
-        creationDate = DateTime.now();
+        type = res["type"],
+        description = res["description"],
+        country = res["country"],
+        city = res["city"],
+        releaseDate = int.parse(res["releasedate"]),
+        folder = res["folder"],
+        creationDate = DateTime.parse(res["creationdate"]);
 
   Map<String, dynamic> toMap() => {
-        'text': brandName,
+        'brandname': brandName,
         'image': image,
+        'type': type,
+        'description': description,
+        'country': country,
+        'city': city,
+        'releasedate': releaseDate,
+        'folder': folder,
+        'creationdate': creationDate.toString()
       };
 }

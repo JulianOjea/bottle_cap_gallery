@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bottle_cap_gallery/src/business_logic/assets/countries_list.dart';
 import 'package:bottle_cap_gallery/src/business_logic/assets/drink_list.dart';
 import 'package:bottle_cap_gallery/src/business_logic/assets/list_iface.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
+import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,6 +39,17 @@ class _AddItemState extends State<AddItem> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    loadAsset();
+  }
+
+  void loadAsset() async {
+    ByteData data = await rootBundle.load('assets/ee.png');
+    _item.image = data.buffer.asUint8List();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       child: ListView(
@@ -62,7 +75,7 @@ class _AddItemState extends State<AddItem> {
                   ],
                 ),
                 //_sizedBox(),
-                _intInput("Fecha de emisión (año)"),
+                _intInput("Año de emisión"),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -162,13 +175,12 @@ class _AddItemState extends State<AddItem> {
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
-          if (this._formKey.currentState!.validate()) ;
-          /*
-          var collection = context.read<Collection>();
-          collection.add(_item);
-          */
-          widget.onButtonTapped(1);
-          print("hola mi buen amigo");
+          if (this._formKey.currentState!.validate()) {
+            var collection = context.read<Collection>();
+            _item.creationDate = DateTime.now();
+            collection.add(_item);
+            widget.onButtonTapped(1);
+          }
         },
         child: Icon(Icons.ac_unit));
   }

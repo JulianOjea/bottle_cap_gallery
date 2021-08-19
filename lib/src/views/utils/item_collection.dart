@@ -45,6 +45,10 @@ class Collection extends ChangeNotifier {
   }
 
   void readTest() async {
+    /*
+    int numberOfItems = await handler.getNumberOfItems();
+    print("number of items in datbase" + numberOfItems.toString());
+*/
     List<Item> retrievedList = await handler.retrieveItems();
     int itemId;
 
@@ -53,6 +57,14 @@ class Collection extends ChangeNotifier {
       print("Item " +
           item.brandName +
           " with id $itemId was retrieved succesfully");
+      print("type: " + item.type);
+      print("description: " + item.description);
+      print("country: " + item.country);
+      print("city: " + item.city);
+      print("releaseDate: " + item.releaseDate.toString());
+      print("folder: " + item.folder);
+      print("creationDate: " + item.creationDate.toString());
+      //print(item.type);
       itemList.add(item);
     }
 
