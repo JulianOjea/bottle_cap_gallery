@@ -1,7 +1,9 @@
 import 'package:bottle_cap_gallery/src/views/ui/edit_item_view.dart';
+import 'package:bottle_cap_gallery/src/views/ui/item_view.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 
 class DisplayItem extends StatefulWidget {
@@ -45,7 +47,9 @@ class _DisplayItemState extends State<DisplayItem> {
       Container(
         color: _containerColorOpacity,
         child: GestureDetector(
-          onTap: _onTapDisplayItem,
+          onTap: () {
+            _navigateAndItemView(context, _item);
+          },
           onLongPress: () {
             setState(() {
               _enabledDeleteButton = true;
@@ -136,6 +140,13 @@ class _DisplayItemState extends State<DisplayItem> {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => EditItem(item)),
+    );
+  }
+
+  void _navigateAndItemView(BuildContext context, Item item) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ViewItem(item)),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bottle_cap_gallery/src/business_logic/assets/countries_list.dart';
@@ -64,14 +63,14 @@ class _AddItemState extends State<AddItem> {
                 //_sizedBox(),
                 _typeAheadFormField(DrinkService(), "Bebida"),
                 //_sizedBox(),
-                _textInput("Descripción", "Description"),
+                _textInput("Descripción", "description"),
                 //_sizedBox(),
                 Row(
                   children: [
                     Expanded(
                       child: _typeAheadFormField(CountriesService(), "País"),
                     ),
-                    Expanded(child: _textInput("Ciudad", "City")),
+                    Expanded(child: _textInput("Ciudad", "city")),
                   ],
                 ),
                 //_sizedBox(),
@@ -178,6 +177,7 @@ class _AddItemState extends State<AddItem> {
           if (this._formKey.currentState!.validate()) {
             var collection = context.read<Collection>();
             _item.creationDate = DateTime.now();
+            print("esta es la ciudad" + _item.city);
             collection.add(_item);
             widget.onButtonTapped(1);
           }
