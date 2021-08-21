@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class ColectionView extends StatefulWidget {
-  ColectionView({Key? key}) : super(key: key);
+class CollectionView extends StatefulWidget {
+  CollectionView({Key? key}) : super(key: key);
 
   @override
-  _ColectionViewState createState() => _ColectionViewState();
+  _CollectionViewState createState() => _CollectionViewState();
 }
 
-class _ColectionViewState extends State<ColectionView> {
+class _CollectionViewState extends State<CollectionView> {
   final PageController controller = PageController(initialPage: 1);
   //int _index = 1;
   late SQFliteCollection handler;
@@ -110,6 +110,7 @@ class ItemSliver extends StatelessWidget {
 
   List<DisplayItem> _auxTest(BuildContext context) {
     var collection = context.watch<Collection>();
+
     List<DisplayItem> ret = [];
     for (var i = 0; i < collection.itemList.length; i++) {
       ret.add(DisplayItem(collection.itemList[i], i));

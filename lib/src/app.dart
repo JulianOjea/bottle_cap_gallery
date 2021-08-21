@@ -1,4 +1,4 @@
-import 'package:bottle_cap_gallery/src/views/ui/collection_view.dart';
+import 'package:bottle_cap_gallery/src/routes/routes.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 
 import 'package:flutter/material.dart';
@@ -12,7 +12,8 @@ class App extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        home: ColectionView(),
+        initialRoute: '/',
+        routes: getApplicationRoutes(),
       ),
     );
   }

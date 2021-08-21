@@ -22,8 +22,10 @@ class Collection extends ChangeNotifier {
   }
 
   void remove(Item item) {
+    print("pasa1");
     itemList.remove(item);
     handler.deleteItem(item.id);
+    print("pasa");
     int itemId = item.id;
     print(
         "Item " + item.brandName + " with id $itemId was removed succesfully");
@@ -54,7 +56,7 @@ class Collection extends ChangeNotifier {
 
     for (var item in retrievedList) {
       itemId = item.id;
-      print("Item " +
+      /*  print("Item " +
           item.brandName +
           " with id $itemId was retrieved succesfully");
       print("type: " + item.type);
@@ -63,7 +65,7 @@ class Collection extends ChangeNotifier {
       print("city: " + item.city);
       print("releaseDate: " + item.releaseDate.toString());
       print("folder: " + item.folder);
-      print("creationDate: " + item.creationDate.toString());
+      print("creationDate: " + item.creationDate.toString()); */
       //print(item.type);
       itemList.add(item);
     }
