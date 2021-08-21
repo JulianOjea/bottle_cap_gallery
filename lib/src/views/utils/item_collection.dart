@@ -72,4 +72,23 @@ class Collection extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void countItems() async {
+    int numberOfItems = await handler.getNumberOfItems();
+    print("number of items in datbase" + numberOfItems.toString());
+    int itemId;
+    List<Item> retrievedList = await handler.retrieveItems();
+
+    for (var item in retrievedList) {
+      itemId = item.id;
+      print(itemId.toString());
+    }
+  }
+
+  void removeTest(int i) {
+    handler.deleteItem(i);
+
+    print("deleted");
+    notifyListeners();
+  }
 }

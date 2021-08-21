@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:bottle_cap_gallery/src/views/ui/add_edit_item_view.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +49,31 @@ class _ViewItemState extends State<ViewItem> {
     );
   }
 
+  _popUpMenuButton() {
+    return PopupMenuButton<int>(
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+        const PopupMenuItem(
+          value: 1,
+          child: Text('Eliminar'),
+        ),
+        const PopupMenuItem(
+          value: 2,
+          child: Text('Editar'),
+        ),
+      ],
+      onSelected: (value) {
+        if (value == 1) {
+          return _onDeleteItem();
+        }
+        if (value == 2) {
+          _navigateAndEdit(context);
+        }
+      },
+    );
+  }
+
+  void onButtonTapped(int index) {}
+
   _onDeleteItem() {
     /* return AlertDialog(
       title: Text('¿Seguro que  quieres eliminar este objeto?'),
@@ -66,26 +94,10 @@ class _ViewItemState extends State<ViewItem> {
               provider.remove(widget.item);
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
-            child: const Text('OK'),
+            child: const Text('Lo entiendo y acepto las consecuencias'),
           ),
         ],
       ),
-    );
-  }
-
-  _popUpMenuButton() {
-    return PopupMenuButton<int>(
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
-        const PopupMenuItem(
-          value: 1,
-          child: Text('Eliminar'),
-        ),
-      ],
-      onSelected: (value) {
-        if (value == 1) {
-          return _onDeleteItem();
-        }
-      },
     );
   }
 
@@ -100,5 +112,14 @@ class _ViewItemState extends State<ViewItem> {
         ":" +
         widget.item.creationDate.minute.toString();
     return date;
+  }
+
+  void _navigateAndEdit(BuildContext context) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddEditItem(onButtonTapped, widget.item, "e"),
+      ),
+    );
   }
 }

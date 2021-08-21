@@ -1,11 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:bottle_cap_gallery/src/business_logic/services/database_services/sqflite_collection.dart';
 import 'package:bottle_cap_gallery/src/views/ui/add_item_view.dart';
+import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_displayer.dart';
 
 import 'package:flutter/material.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+import 'add_edit_item_view.dart';
 
 class CollectionView extends StatefulWidget {
   CollectionView({Key? key}) : super(key: key);
@@ -24,6 +29,8 @@ class _CollectionViewState extends State<CollectionView> {
     super.initState();
     this.handler = SQFliteCollection();
     this.handler.initializeDB();
+    var collection = context.read<Collection>();
+    collection.readTest();
   }
 
   @override
@@ -40,7 +47,20 @@ class _CollectionViewState extends State<CollectionView> {
             });
           },
           children: <Widget>[
-            AddItem(onButtonTapped),
+            AddEditItem(
+                onButtonTapped,
+                Item(
+                    brandName: '',
+                    city: '',
+                    country: '',
+                    creationDate: DateTime.now(),
+                    description: '',
+                    folder: '',
+                    id: -1,
+                    image: Uint8List(0),
+                    releaseDate: -1,
+                    type: ''),
+                "a"),
             _customScrollView(),
           ],
         ),
@@ -126,7 +146,7 @@ class _GridAppBar extends StatelessWidget {
       leading: IconButton(
         onPressed: () {
           var collection = context.read<Collection>();
-          collection.readTest();
+          collection.removeTest(35);
         },
         icon: Icon(Icons.zoom_out),
       ),
