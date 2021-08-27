@@ -60,7 +60,8 @@ class _CollectionViewState extends State<CollectionView> {
                     image: Uint8List(0),
                     releaseDate: -1,
                     type: ''),
-                "a"),
+                "a",
+                context),
             _customScrollView(),
           ],
         ),
@@ -77,7 +78,7 @@ class _CollectionViewState extends State<CollectionView> {
     );
   }
 
-  void onButtonTapped(int index) {
+  void onButtonTapped(int index, BuildContext context) {
     controller.animateToPage(
       index,
       duration: Duration(milliseconds: 500),

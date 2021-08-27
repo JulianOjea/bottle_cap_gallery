@@ -15,10 +15,11 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class AddEditItem extends StatefulWidget {
-  final void Function(int) onButtonTapped;
+  final void Function(int, BuildContext) onButtonTapped;
   final Item item;
   final String flag;
-  AddEditItem(this.onButtonTapped, this.item, this.flag);
+  final BuildContext editContext;
+  AddEditItem(this.onButtonTapped, this.item, this.flag, this.editContext);
   @override
   _AddEditItemState createState() => _AddEditItemState();
 }
@@ -187,22 +188,19 @@ class _AddEditItemState extends State<AddEditItem> {
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
-          if (widget.flag == "a") {
-            if (this._formKey.currentState!.validate()) {
+          if (this._formKey.currentState!.validate()) {
+            if (widget.flag == "a") {
               var collection = context.read<Collection>();
               widget.item.creationDate = DateTime.now();
               print("esta es la ciudad" + widget.item.city);
-              /* if (widget.flag == "a") {
-              print("ha pasado por aqui");
-              if (this.imageLoaded == 1) {
-                print("se cargo");
-              } else {
-                print("no se cargo");
-                loadAsset();
-              }
-            } */
               collection.add(widget.item);
-              widget.onButtonTapped(1);
+              widget.onButtonTapped(1, context);
+            }
+            if (widget.flag == "e") {
+              var collection = context.read<Collection>();
+              collection.edit(widget.item);
+              print("edito el item");
+              widget.onButtonTapped(0, widget.editContext);
             }
           }
         },

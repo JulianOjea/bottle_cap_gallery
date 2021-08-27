@@ -72,8 +72,6 @@ class _ViewItemState extends State<ViewItem> {
     );
   }
 
-  void onButtonTapped(int index) {}
-
   _onDeleteItem() {
     /* return AlertDialog(
       title: Text('¿Seguro que  quieres eliminar este objeto?'),
@@ -118,8 +116,14 @@ class _ViewItemState extends State<ViewItem> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddEditItem(onButtonTapped, widget.item, "e"),
+        builder: (context) =>
+            AddEditItem(onButtonTapped, widget.item, "e", context),
       ),
     );
+  }
+
+  void onButtonTapped(int index, BuildContext context) {
+    Navigator.pop(context);
+    setState(() {});
   }
 }
