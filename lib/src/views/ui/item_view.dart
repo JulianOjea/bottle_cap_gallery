@@ -6,8 +6,9 @@ import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
-
+//It provides a view of a concrete item of the collection
+//Uses ListView to display a full list of the item fields
+//Adds edit and delete functionalitty with a PopUpMenuButton
 class ViewItem extends StatefulWidget {
   final Item item;
   ViewItem(this.item);

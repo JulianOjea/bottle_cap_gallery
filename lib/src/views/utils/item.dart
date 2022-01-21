@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+//Entity that represents each bottle cap managed on the collection
 class Item {
   int id;
 

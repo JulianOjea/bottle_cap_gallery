@@ -1,16 +1,28 @@
 import 'dart:typed_data';
 
 import 'package:bottle_cap_gallery/src/business_logic/services/database_services/sqflite_collection.dart';
-import 'package:bottle_cap_gallery/src/views/ui/add_item_view.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_displayer.dart';
 
 import 'package:flutter/material.dart';
-//import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'add_edit_item_view.dart';
+
+//This file contains the main view of the collection, it uses PageView
+//to navigate between the main collection view and the add item View.
+
+//Main page:
+//It is built with a CustomScrollView, it only supports a basic grid to show all the items
+//using _ItemSliver and _GridAppBar to form the display. Each class work with SliverGrid and
+//SliverAddBar.
+// ¡¡ This structure is still being implemented !!
+
+//Each item is saved an retrieved using SQFliteCollection package.
+
+//Add Item View:
+//Uses AddEditItem class to get the information of the new item and saving it into the gallery.
 
 class CollectionView extends StatefulWidget {
   CollectionView({Key? key}) : super(key: key);
@@ -21,7 +33,6 @@ class CollectionView extends StatefulWidget {
 
 class _CollectionViewState extends State<CollectionView> {
   final PageController controller = PageController(initialPage: 1);
-  //int _index = 1;
   late SQFliteCollection handler;
 
   @override
@@ -73,7 +84,7 @@ class _CollectionViewState extends State<CollectionView> {
     return CustomScrollView(
       slivers: [
         _GridAppBar(),
-        ItemSliver(),
+        _ItemSliver(),
       ],
     );
   }
@@ -85,42 +96,9 @@ class _CollectionViewState extends State<CollectionView> {
       curve: Curves.fastOutSlowIn,
     );
   }
-  /* _test() {
-    final ImagePicker _picker = ImagePicker();
-    if (_index == 0) {
-      FutureBuilder(
-          future: _picker.pickImage(source: ImageSource.camera),
-          builder: (context, snapshot) {
-            return Container(
-              color: Colors.green,
-            );
-          });
-    }
-    return Container(
-      color: Colors.purple,
-    );
-  } */
-
 }
 
-class ItemList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var collection = context.watch<Collection>();
-
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
-      itemCount: collection.itemList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return DisplayItem(collection.itemList[index], index);
-      },
-    );
-  }
-}
-
-class ItemSliver extends StatelessWidget {
+class _ItemSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverGrid.count(
@@ -151,26 +129,7 @@ class _GridAppBar extends StatelessWidget {
         },
         icon: Icon(Icons.zoom_out),
       ),
-      /* actions: [
-        IconButton(
-            onPressed: () {
-              _navigateAndReturnNewItem(context);
-            },
-            icon: Icon(Icons.sort)),
-      ], */
       title: Text('Collection'),
     );
   }
-
-  /* void _sortByText(BuildContext context) {
-    var collection = context.read<Collection>();
-    collection.sortByText();
-  } */
-
-  /* void _navigateAndReturnNewItem(BuildContext context) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddItem()),
-    );
-  } */
 }

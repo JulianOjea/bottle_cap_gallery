@@ -14,6 +14,12 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
+//Since add and edit are similar operations they are sumarized on this class
+
+//Adds a new item to the collection
+//Item: item to be added
+//flag: used to chose between an add or an edit operation.
+//edit context: context on the application
 class AddEditItem extends StatefulWidget {
   final void Function(int, BuildContext) onButtonTapped;
   final Item item;
@@ -24,25 +30,36 @@ class AddEditItem extends StatefulWidget {
   _AddEditItemState createState() => _AddEditItemState();
 }
 
+//_displayimage: image set up when there is no image to show
+//_formKey: key of the displayed form
+//initialReleaseDate: used to generate the release date on the item
+
+//Using a ListView to request display atribute fields.
+//List of fields:
+//1.Image: _imageInput, it displays the image of the item, for testing purposes it
+//    shows an default image onTap
+//2.BrandName: _textInput, requesting brandName with Form.
+//3.Drink: _typeAheadFormField, a list of drinks is displayed on this Form
+//    so the user can select one of them. DrinkService class keeps hard coded list of drinks.
+//4.Description: _textInput, requesting brandName with Form.
+//5.Country: _typeAheadFormField, as done on drinks. CountriesService() keeps the hard coded
+//    list of countries.
+//6.City: _textInput, requesting city with Form
+//7.ReleaseDate: _intInput, requesting release date with Form
+
 class _AddEditItemState extends State<AddEditItem> {
   Image _displayimage = Image.memory(kTransparentImage);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  int imageLoaded = 0;
-
+  //int imageLoaded = 0;
   String initialReleaseDate = "";
+
   @override
   void initState() {
     super.initState();
-/*     if (widget.flag == "a") {
-      print("hello budy");
-      loadAsset();
-    } */
-
     if (widget.flag == "e") {
       if (widget.item.releaseDate != -1) {
         initialReleaseDate = widget.item.releaseDate.toString();
       }
-
       _displayimage = Image.memory(widget.item.image);
     }
     if (widget.flag == "a") {
@@ -50,6 +67,7 @@ class _AddEditItemState extends State<AddEditItem> {
     }
   }
 
+  //being tested
   void loadAsset() async {
     ByteData data = await rootBundle.load('assets/ee.png');
     widget.item.image = data.buffer.asUint8List();
@@ -170,7 +188,7 @@ class _AddEditItemState extends State<AddEditItem> {
   }
 
   _setItemImage() async {
-    this.imageLoaded = 1;
+    //this.imageLoaded = 1;
     widget.item.image = await _getNetworkImage();
 
     setState(() {
