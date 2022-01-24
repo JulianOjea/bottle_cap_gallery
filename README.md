@@ -1,6 +1,6 @@
 # About The Project
 
-This proyect is coded on Dart using Flutter.
+This project is coded on Dart using Flutter.
 It aims to build a collection-like app that stores bottle caps. The main focus is to design a simplified and intuitive UI 
 that helps the user explorate and interact with the app in the smoothest and most fluid way.
 
