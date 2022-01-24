@@ -1,16 +1,23 @@
-# bottle_cap_gallery
+# About The Project
 
-A new Flutter project.
+This proyect is coded on Dart using Flutter.
+It aims to build a collection-like app that stores bottle caps. The main focus is to design a simplified and intuitive UI 
+that helps the user explorate and interact with the app in the smoothest and most fluid way.
 
-## Getting Started
+Main operations supported on the app:
 
-This project is a starting point for a Flutter application.
+- [addbottlecap]
+- [Delete bottle cap]
+- [Edit bottle cap]
+- [View collection]
+- [(TODO) Sort by field]
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+One of the main challenges of the app is to store the most relevant data of a bottle cap, as is a personal collection,
+this data will be introduced by the user. Therefore the next data will be stored for each bottle cap:
+- [Image]
+- [Brand Name]
+- [Type]
+- [Description]
+- [Country]
+- [City]
+- [Release Date]
