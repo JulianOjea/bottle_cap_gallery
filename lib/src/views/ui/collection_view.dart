@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bottle_cap_gallery/src/app.dart';
 import 'package:bottle_cap_gallery/src/business_logic/services/database_services/sqflite_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
@@ -36,6 +37,8 @@ class CollectionView extends StatefulWidget {
 class _CollectionViewState extends State<CollectionView> {
   final PageController controller = PageController(initialPage: 1);
   late SQFliteCollection handler;
+  late bool _ifHideAppBar;
+  String dropdownValue = "Por defecto";
 
   @override
   void initState() {
@@ -44,19 +47,31 @@ class _CollectionViewState extends State<CollectionView> {
     this.handler.initializeDB();
     var collection = context.read<Collection>();
     collection.readTest();
+    _ifHideAppBar = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Material(
+    return Scaffold(
+      appBar: _ifHideAppBar
+          ? null
+          : AppBar(
+              title: Text("Bottle Cap Gallery!"),
+              actions: [
+                _onSelectedSortOrder(),
+              ],
+            ),
+      body: Material(
         child: PageView(
           scrollDirection: Axis.horizontal,
           controller: controller,
           onPageChanged: (index) {
             setState(() {
-              //_index = index;
+              if (index == 0) {
+                _ifHideAppBar = true;
+              } else if (index == 1) {
+                _ifHideAppBar = false;
+              }
             });
           },
           children: <Widget>[
@@ -75,12 +90,32 @@ class _CollectionViewState extends State<CollectionView> {
                     type: ''),
                 "a",
                 context),
-            gridHeader(),
-            //_customScrollView(),
+            _selectMainView(),
           ],
         ),
       ),
     );
+  }
+
+  _customScrollView() {
+    return CustomScrollView(
+      slivers: [
+        _GridAppBar(),
+        _ItemSliver(),
+      ],
+    );
+  }
+
+  Widget _selectMainView() {
+    if (this.dropdownValue == "Por defecto") {
+      return CustomScrollView(
+        slivers: [
+          _ItemSliver(),
+        ],
+      );
+    } else {
+      return gridHeader();
+    }
   }
 
   Widget gridHeader() {
@@ -94,17 +129,14 @@ class _CollectionViewState extends State<CollectionView> {
     }
 
     //Obtain different countries in the list
+    displayItemList = _sortByAtrib(displayItemList);
+
     List<String> differentValues = [];
-    displayItemList.sort((a, b) => a.item.country.compareTo(b.item.country));
-    for (var i = 0; i < collection.itemList.length; i++) {
-      differentValues.add(displayItemList[i].item.country);
-    }
-    differentValues = differentValues.toSet().toList();
+    differentValues = _getItemList(displayItemList, collection);
 
     //generate a map grouping by country
-    var groupedList =
-        displayItemList.groupListsBy((element) => element.item.country);
-    print(collection.itemList.length);
+    var groupedList = _generateMap(displayItemList);
+
     return new ListView.builder(
       itemCount: differentValues.length,
       itemBuilder: (context, index) {
@@ -146,21 +178,69 @@ class _CollectionViewState extends State<CollectionView> {
     );
   }
 
-  _customScrollView() {
-    return CustomScrollView(
-      slivers: [
-        _GridAppBar(),
-        _ItemSliver(),
-      ],
-    );
-  }
-
   void onButtonTapped(int index, BuildContext context) {
     controller.animateToPage(
       index,
       duration: Duration(milliseconds: 500),
       curve: Curves.fastOutSlowIn,
     );
+  }
+
+  _onSelectedSortOrder() {
+    return DropdownButton<String>(
+      underline: null,
+      value: dropdownValue,
+      dropdownColor: Colors.blue,
+      icon: const Icon(Icons.arrow_downward),
+      //elevation: 16,
+      style: const TextStyle(color: Colors.white, fontSize: 18),
+      onChanged: (String? newValue) {
+        setState(() {
+          dropdownValue = newValue!;
+        });
+      },
+      items: <String>['Por defecto', 'Países', 'Bebidas']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+
+  List<String> _getItemList(List<DisplayItem> displayItemList, var collection) {
+    List<String> differentValues = [];
+    if (this.dropdownValue == "Bebidas") {
+      for (var i = 0; i < collection.itemList.length; i++) {
+        differentValues.add(displayItemList[i].item.type);
+      }
+      return differentValues.toSet().toList();
+    } else {
+      for (var i = 0; i < collection.itemList.length; i++) {
+        differentValues.add(displayItemList[i].item.country);
+      }
+      return differentValues.toSet().toList();
+    }
+  }
+
+  List<DisplayItem> _sortByAtrib(List<DisplayItem> displayItemList) {
+    if (this.dropdownValue == "Bebidas") {
+      displayItemList.sort((a, b) => a.item.type.compareTo(b.item.type));
+      return displayItemList;
+    } else {
+      displayItemList.sort((a, b) => a.item.country.compareTo(b.item.country));
+      return displayItemList;
+    }
+  }
+
+  Map<String, List<DisplayItem>> _generateMap(
+      List<DisplayItem> displayItemList) {
+    if (this.dropdownValue == "Bebidas") {
+      return displayItemList.groupListsBy((element) => element.item.type);
+    } else {
+      return displayItemList.groupListsBy((element) => element.item.country);
+    }
   }
 }
 
