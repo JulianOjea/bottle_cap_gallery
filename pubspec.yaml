@@ -37,6 +37,8 @@ dependencies:
   flutter_typeahead: ^3.2.0
   country_list_pick: ^1.0.1+5
   country_picker: ^2.0.7
+  sticky_headers: ^0.2.0
+  collection: ^1.15.0
 
 dev_dependencies:
   flutter_test:

@@ -4,9 +4,11 @@ import 'package:bottle_cap_gallery/src/business_logic/services/database_services
 import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_displayer.dart';
+import 'package:collection/collection.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 
 import 'add_edit_item_view.dart';
 
@@ -73,10 +75,74 @@ class _CollectionViewState extends State<CollectionView> {
                     type: ''),
                 "a",
                 context),
-            _customScrollView(),
+            gridHeader(),
+            //_customScrollView(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget gridHeader() {
+    //obtain item from list
+    var collection = context.watch<Collection>();
+
+    //generate display list to work with
+    List<DisplayItem> displayItemList = [];
+    for (var i = 0; i < collection.itemList.length; i++) {
+      displayItemList.add(DisplayItem(collection.itemList[i], i));
+    }
+
+    //Obtain different countries in the list
+    List<String> differentValues = [];
+    displayItemList.sort((a, b) => a.item.country.compareTo(b.item.country));
+    for (var i = 0; i < collection.itemList.length; i++) {
+      differentValues.add(displayItemList[i].item.country);
+    }
+    differentValues = differentValues.toSet().toList();
+
+    //generate a map grouping by country
+    var groupedList =
+        displayItemList.groupListsBy((element) => element.item.country);
+
+    return new ListView.builder(
+      itemCount: collection.itemList.length,
+      itemBuilder: (context, index) {
+        return new StickyHeader(
+          header: new Container(
+            height: 38.0,
+            color: Colors.white,
+            padding: new EdgeInsets.symmetric(horizontal: 12.0),
+            alignment: Alignment.centerLeft,
+            child: new Text(
+              differentValues[index],
+              style: const TextStyle(
+                  color: Colors.purple,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          content: Container(
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: groupedList[differentValues[index]]?.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1,
+              ),
+              itemBuilder: (contxt, indx) {
+                return Card(
+                  margin: EdgeInsets.all(4.0),
+                  color: Colors.purpleAccent,
+                  child: groupedList[differentValues[index]]?[indx],
+                );
+              },
+            ),
+          ),
+        );
+      },
+      shrinkWrap: true,
     );
   }
 
