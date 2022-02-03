@@ -104,9 +104,9 @@ class _CollectionViewState extends State<CollectionView> {
     //generate a map grouping by country
     var groupedList =
         displayItemList.groupListsBy((element) => element.item.country);
-
+    print(collection.itemList.length);
     return new ListView.builder(
-      itemCount: collection.itemList.length,
+      itemCount: differentValues.length,
       itemBuilder: (context, index) {
         return new StickyHeader(
           header: new Container(
