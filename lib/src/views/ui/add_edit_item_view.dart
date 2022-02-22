@@ -84,29 +84,37 @@ class _AddEditItemState extends State<AddEditItem> {
               children: [
                 _imageInput(),
                 //_sizedBox(),
-                _textInput("Nombre", "brandName", widget.item.brandName),
-                //_sizedBox(),
-                _typeAheadFormField(DrinkService(), "Bebida", widget.item.type),
-                //_sizedBox(),
-                _textInput(
-                    "Descripción", "description", widget.item.description),
-                //_sizedBox(),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _typeAheadFormField(
-                          CountriesService(), "País", widget.item.country),
-                    ),
-                    Expanded(
-                        child: _textInput("Ciudad", "city", widget.item.city)),
-                  ],
-                ),
-                //_sizedBox(),
-                _intInput("Año de emisión"),
-                SizedBox(
-                  height: 10.0,
-                ),
-                _submitButton(context),
+                Padding(
+                  padding: EdgeInsets.only(left: 30, right: 30, top: 30),
+                  child: Column(
+                    children: [
+                      _textInput("Nombre", "brandName", widget.item.brandName),
+                      SizedBox(height: 10),
+                      _typeAheadFormField(
+                          DrinkService(), "Bebida", widget.item.type),
+                      SizedBox(height: 10),
+                      _textInput("Descripción", "description",
+                          widget.item.description),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _typeAheadFormField(CountriesService(),
+                                "País", widget.item.country),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                              child: _textInput(
+                                  "Ciudad", "city", widget.item.city)),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      _intInput("Año de emisión"),
+                      SizedBox(height: 5),
+                      _submitButton(context),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -148,6 +156,7 @@ class _AddEditItemState extends State<AddEditItem> {
       child: TextFormField(
         initialValue: initialValue,
         decoration: InputDecoration(
+          border: OutlineInputBorder(),
           labelText: labelText,
         ),
         onChanged: (value) {
@@ -169,6 +178,7 @@ class _AddEditItemState extends State<AddEditItem> {
       child: TextFormField(
         initialValue: initialReleaseDate,
         decoration: InputDecoration(
+          border: OutlineInputBorder(),
           labelText: labelText,
         ),
         onChanged: (value) {
@@ -236,7 +246,8 @@ class _AddEditItemState extends State<AddEditItem> {
       hideOnError: true,
       textFieldConfiguration: TextFieldConfiguration(
           controller: typeAheadController,
-          decoration: InputDecoration(labelText: labelText)),
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), labelText: labelText)),
       suggestionsCallback: (pattern) {
         return list.getSuggestions(pattern);
       },

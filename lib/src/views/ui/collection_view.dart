@@ -37,7 +37,6 @@ class CollectionView extends StatefulWidget {
 class _CollectionViewState extends State<CollectionView> {
   final PageController controller = PageController(initialPage: 1);
   late SQFliteCollection handler;
-  late bool _ifHideAppBar;
   String dropdownValue = "Por defecto";
 
   @override
@@ -47,32 +46,17 @@ class _CollectionViewState extends State<CollectionView> {
     this.handler.initializeDB();
     var collection = context.read<Collection>();
     collection.readTest();
-    _ifHideAppBar = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _ifHideAppBar
-          ? null
-          : AppBar(
-              title: Text("Bottle Cap Gallery!"),
-              actions: [
-                _onSelectedSortOrder(),
-              ],
-            ),
       body: Material(
         child: PageView(
           scrollDirection: Axis.horizontal,
           controller: controller,
           onPageChanged: (index) {
-            setState(() {
-              if (index == 0) {
-                _ifHideAppBar = true;
-              } else if (index == 1) {
-                _ifHideAppBar = false;
-              }
-            });
+            setState(() {});
           },
           children: <Widget>[
             AddEditItem(
@@ -97,25 +81,29 @@ class _CollectionViewState extends State<CollectionView> {
     );
   }
 
-  _customScrollView() {
-    return CustomScrollView(
-      slivers: [
-        _GridAppBar(),
-        _ItemSliver(),
-      ],
-    );
-  }
-
   Widget _selectMainView() {
     if (this.dropdownValue == "Por defecto") {
       return CustomScrollView(
-        slivers: [
-          _ItemSliver(),
-        ],
+        slivers: [_mainViewAppBar(), _ItemSliver()],
       );
     } else {
-      return gridHeader();
+      return NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[_mainViewAppBar()];
+        },
+        body: gridHeader(),
+      );
     }
+  }
+
+  _mainViewAppBar() {
+    return SliverAppBar(
+      toolbarHeight: 40,
+      title: Text("Bottle Cap Gallery!!"),
+      actions: [
+        _onSelectedSortOrder(),
+      ],
+    );
   }
 
   Widget gridHeader() {

@@ -14,6 +14,15 @@ class App extends StatelessWidget {
         title: 'Material App',
         initialRoute: '/',
         routes: getApplicationRoutes(),
+        theme: ThemeData(
+          primaryColor: Colors.green,
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.lightBlue),
+          canvasColor: Colors.lightBlue.shade50,
+          textTheme: const TextTheme(
+              bodyText1: TextStyle(color: Colors.green),
+              bodyText2: TextStyle(color: Colors.purple)),
+              
+        ),
       ),
     );
   }

@@ -6,3 +6,4 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/': (BuildContext context) => CollectionView(),
   };
 }
+  
