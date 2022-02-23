@@ -10,6 +10,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 import 'add_edit_item_view.dart';
 
@@ -98,8 +99,8 @@ class _CollectionViewState extends State<CollectionView> {
 
   _mainViewAppBar() {
     return SliverAppBar(
-      toolbarHeight: 40,
-      title: Text("Bottle Cap Gallery!!"),
+      title: Text("Bottle Cap Gallery!!",
+          style: TextStyle(color: Color.fromARGB(255, 47, 54, 162))),
       actions: [
         _onSelectedSortOrder(),
       ],
@@ -126,18 +127,19 @@ class _CollectionViewState extends State<CollectionView> {
     var groupedList = _generateMap(displayItemList);
 
     return new ListView.builder(
+      //padding: EdgeInsets.only(),
       itemCount: differentValues.length,
       itemBuilder: (context, index) {
         return new StickyHeader(
           header: new Container(
             height: 38.0,
-            color: Colors.white,
+            color: Colors.lightBlue.shade50,
             padding: new EdgeInsets.symmetric(horizontal: 12.0),
             alignment: Alignment.centerLeft,
             child: new Text(
               differentValues[index],
               style: const TextStyle(
-                  color: Colors.purple,
+                  color: Color.fromARGB(255, 47, 54, 162),
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
@@ -154,7 +156,7 @@ class _CollectionViewState extends State<CollectionView> {
               itemBuilder: (contxt, indx) {
                 return Card(
                   margin: EdgeInsets.all(4.0),
-                  color: Colors.purpleAccent,
+                  color: Color.fromARGB(255, 47, 54, 162),
                   child: groupedList[differentValues[index]]?[indx],
                 );
               },
@@ -175,6 +177,45 @@ class _CollectionViewState extends State<CollectionView> {
   }
 
   _onSelectedSortOrder() {
+    return DropdownButtonHideUnderline(
+        child: DropdownButton2(
+      items: MenuItems.items
+          .map(
+            (item) => DropdownMenuItem<MenuItem>(
+              value: item,
+              child: MenuItems.buildItem(item),
+            ),
+          )
+          .toList(),
+      onChanged: (newValue) {
+        setState(() {
+          newValue as MenuItem;
+          dropdownValue = newValue.text;
+        });
+      },
+      itemHeight: 48,
+      itemPadding: const EdgeInsets.only(left: 16, right: 16),
+      dropdownWidth: 64,
+      dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
+      dropdownDecoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: Color.fromARGB(255, 47, 54, 162),
+      ),
+      dropdownElevation: 8,
+      //offset: const Offset(0, 8),
+      customButton: Padding(
+        padding: const EdgeInsets.only(right: 5),
+        child: const Icon(
+          Icons.sort_rounded,
+          size: 46,
+          color: Color.fromARGB(255, 47, 54, 162),
+        ),
+      ),
+      customItemsIndexes: const [3],
+      customItemsHeight: 8,
+    ));
+  }
+  /*_onSelectedSortOrder() {
     return DropdownButton<String>(
       underline: null,
       value: dropdownValue,
@@ -195,7 +236,7 @@ class _CollectionViewState extends State<CollectionView> {
         );
       }).toList(),
     );
-  }
+  }*/
 
   List<String> _getItemList(List<DisplayItem> displayItemList, var collection) {
     List<String> differentValues = [];
@@ -237,6 +278,8 @@ class _ItemSliver extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverGrid.count(
       crossAxisCount: 2,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
       children: _auxTest(context),
     );
   }
@@ -265,5 +308,57 @@ class _GridAppBar extends StatelessWidget {
       ),
       title: Text('Collection'),
     );
+  }
+}
+
+class MenuItem {
+  final String text;
+  final IconData icon;
+
+  const MenuItem({
+    required this.text,
+    required this.icon,
+  });
+}
+
+class MenuItems {
+  static const List<MenuItem> items = [default_menu_item, country, drink];
+
+  static const default_menu_item =
+      MenuItem(text: 'Por defecto', icon: Icons.sort_by_alpha);
+  static const country = MenuItem(text: 'Países', icon: Icons.flag);
+  static const drink = MenuItem(text: 'Bebidas', icon: Icons.local_drink);
+
+  static Widget buildItem(MenuItem item) {
+    return Row(
+      children: [
+        Icon(item.icon, color: Colors.lightBlue.shade50, size: 22),
+        const SizedBox(
+          width: 10,
+        ),
+        /*
+        Text(
+          item.text,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        */
+      ],
+    );
+  }
+
+  static onChanged(BuildContext context, MenuItem item) {
+    switch (item) {
+      case MenuItems.default_menu_item:
+        //Do something
+        break;
+      case MenuItems.country:
+        //Do something
+        break;
+      case MenuItems.drink:
+        //Do something
+        break;
+    }
   }
 }
