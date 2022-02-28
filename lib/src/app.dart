@@ -16,12 +16,11 @@ class App extends StatelessWidget {
         routes: getApplicationRoutes(),
         theme: ThemeData(
           primaryColor: Colors.green,
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.lightBlue),
-          canvasColor: Colors.lightBlue.shade50,
+          canvasColor: Color.fromARGB(255, 189, 139, 156),
           textTheme: const TextTheme(
               bodyText1: TextStyle(color: Colors.green),
-              bodyText2: TextStyle(color: Colors.purple)),
-              
+              bodyText2: TextStyle(
+                  color: Color.fromARGB(255, 197, 230, 166), fontSize: 20)),
         ),
       ),
     );

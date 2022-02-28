@@ -132,10 +132,19 @@ class _AddEditItemState extends State<AddEditItem> {
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
+          Container(
+            width: 200.0,
+            height: 200.0,
+            decoration: new BoxDecoration(
+              color: Color.fromARGB(255, 197, 230, 166),
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+            ),
+          ),
           Icon(
             Icons.add_a_photo,
             size: 50.0,
-            color: Colors.lightBlue,
+            color: Color.fromARGB(255, 189, 139, 156),
           ),
           _displayimage,
           GestureDetector(
@@ -144,7 +153,7 @@ class _AddEditItemState extends State<AddEditItem> {
         ],
       ),
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Color.fromARGB(255, 189, 139, 156),
       ),
     );
   }
@@ -154,9 +163,25 @@ class _AddEditItemState extends State<AddEditItem> {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
+        style: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
         initialValue: initialValue,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(
+                color: Color.fromARGB(255, 197, 230, 166), width: 0.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            borderSide: BorderSide(
+              color: Color.fromARGB(255, 197, 230, 166),
+            ),
+          ),
+          labelStyle: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color.fromARGB(255, 197, 230, 166),
+            ),
+          ),
           labelText: labelText,
         ),
         onChanged: (value) {
@@ -176,8 +201,20 @@ class _AddEditItemState extends State<AddEditItem> {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
+        style: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
         initialValue: initialReleaseDate,
         decoration: InputDecoration(
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(
+                color: Color.fromARGB(255, 197, 230, 166), width: 0.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            borderSide: BorderSide(
+              color: Color.fromARGB(255, 197, 230, 166),
+            ),
+          ),
+          labelStyle: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
           border: OutlineInputBorder(),
           labelText: labelText,
         ),
@@ -215,6 +252,9 @@ class _AddEditItemState extends State<AddEditItem> {
 
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Color.fromARGB(255, 197, 230, 166))),
         onPressed: () {
           if (this._formKey.currentState!.validate()) {
             if (widget.flag == "a") {
@@ -232,7 +272,7 @@ class _AddEditItemState extends State<AddEditItem> {
             }
           }
         },
-        child: Icon(Icons.ac_unit));
+        child: Icon(Icons.check, color: Color.fromARGB(255, 189, 139, 156)));
   }
 
   _typeAheadFormField(
@@ -245,9 +285,22 @@ class _AddEditItemState extends State<AddEditItem> {
       hideOnLoading: true,
       hideOnError: true,
       textFieldConfiguration: TextFieldConfiguration(
+          style: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
           controller: typeAheadController,
           decoration: InputDecoration(
-              border: OutlineInputBorder(), labelText: labelText)),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: const BorderSide(
+                    color: Color.fromARGB(255, 197, 230, 166), width: 0.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.0),
+                borderSide: BorderSide(
+                  color: Color.fromARGB(255, 197, 230, 166),
+                ),
+              ),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+              border: OutlineInputBorder(),
+              labelText: labelText)),
       suggestionsCallback: (pattern) {
         return list.getSuggestions(pattern);
       },
@@ -258,6 +311,7 @@ class _AddEditItemState extends State<AddEditItem> {
           widget.item.country = suggestion;
         }
         return ListTile(
+          textColor: Color.fromARGB(255, 197, 230, 166),
           title: Text(suggestion),
         );
       },

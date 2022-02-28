@@ -99,8 +99,9 @@ class _CollectionViewState extends State<CollectionView> {
 
   _mainViewAppBar() {
     return SliverAppBar(
+      backgroundColor: Color.fromARGB(255, 189, 139, 156),
       title: Text("Bottle Cap Gallery!!",
-          style: TextStyle(color: Color.fromARGB(255, 47, 54, 162))),
+          style: TextStyle(color: Color.fromARGB(255, 197, 230, 166))),
       actions: [
         _onSelectedSortOrder(),
       ],
@@ -127,25 +128,26 @@ class _CollectionViewState extends State<CollectionView> {
     var groupedList = _generateMap(displayItemList);
 
     return new ListView.builder(
-      //padding: EdgeInsets.only(),
+      padding: EdgeInsets.only(top: 0),
       itemCount: differentValues.length,
       itemBuilder: (context, index) {
         return new StickyHeader(
           header: new Container(
             height: 38.0,
-            color: Colors.lightBlue.shade50,
+            color: Color.fromARGB(255, 189, 139, 156),
             padding: new EdgeInsets.symmetric(horizontal: 12.0),
             alignment: Alignment.centerLeft,
             child: new Text(
               differentValues[index],
               style: const TextStyle(
-                  color: Color.fromARGB(255, 47, 54, 162),
+                  color: Color.fromARGB(255, 197, 230, 166),
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
           ),
           content: Container(
             child: GridView.builder(
+              padding: EdgeInsets.only(top: 0),
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: groupedList[differentValues[index]]?.length,
@@ -156,7 +158,7 @@ class _CollectionViewState extends State<CollectionView> {
               itemBuilder: (contxt, indx) {
                 return Card(
                   margin: EdgeInsets.all(4.0),
-                  color: Color.fromARGB(255, 47, 54, 162),
+                  color: Color.fromARGB(255, 197, 230, 166),
                   child: groupedList[differentValues[index]]?[indx],
                 );
               },
@@ -199,7 +201,7 @@ class _CollectionViewState extends State<CollectionView> {
       dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
       dropdownDecoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        color: Color.fromARGB(255, 47, 54, 162),
+        color: Color.fromARGB(255, 197, 230, 166),
       ),
       dropdownElevation: 8,
       //offset: const Offset(0, 8),
@@ -208,7 +210,7 @@ class _CollectionViewState extends State<CollectionView> {
         child: const Icon(
           Icons.sort_rounded,
           size: 46,
-          color: Color.fromARGB(255, 47, 54, 162),
+          color: Color.fromARGB(255, 197, 230, 166),
         ),
       ),
       customItemsIndexes: const [3],
@@ -332,7 +334,7 @@ class MenuItems {
   static Widget buildItem(MenuItem item) {
     return Row(
       children: [
-        Icon(item.icon, color: Colors.lightBlue.shade50, size: 22),
+        Icon(item.icon, color: Color.fromARGB(255, 189, 139, 156), size: 22),
         const SizedBox(
           width: 10,
         ),
