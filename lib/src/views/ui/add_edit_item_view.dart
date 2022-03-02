@@ -82,6 +82,7 @@ class _AddEditItemState extends State<AddEditItem> {
             key: _formKey,
             child: Column(
               children: [
+                SizedBox(height: 10),
                 _imageInput(),
                 //_sizedBox(),
                 Padding(
@@ -201,6 +202,7 @@ class _AddEditItemState extends State<AddEditItem> {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
+        keyboardType: TextInputType.number,
         style: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
         initialValue: initialReleaseDate,
         decoration: InputDecoration(

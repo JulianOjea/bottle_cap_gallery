@@ -30,16 +30,38 @@ class _ViewItemState extends State<ViewItem> {
   Widget build(BuildContext context) {
     return Material(
       child: ListView(children: [
-        AppBar(
+        /*AppBar(
+          elevation: 0,
+          centerTitle: true,
           iconTheme: IconThemeData(color: Color.fromARGB(255, 197, 230, 166)),
           title: Text(widget.item.brandName,
-              style: TextStyle(color: Color.fromARGB(255, 197, 230, 166))),
+              style: TextStyle(
+                  color: Color.fromARGB(255, 197, 230, 166), fontSize: 30)),
           backgroundColor: Color.fromARGB(255, 189, 139, 156),
           actionsIconTheme:
               IconThemeData(color: Color.fromARGB(255, 197, 230, 166)),
           actions: [
             _popUpMenuButton(),
           ],
+        ),*/
+        Container(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    child: Text(widget.item.brandName,
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 197, 230, 166),
+                            fontSize: 30)),
+                  ),
+                ),
+                _popUpMenuButton()
+              ],
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(10.0),
@@ -73,6 +95,14 @@ class _ViewItemState extends State<ViewItem> {
 
   _popUpMenuButton() {
     return PopupMenuButton<int>(
+      icon: IconButton(
+        icon: Icon(
+          Icons.more_vert,
+          color: Color.fromARGB(255, 197, 230, 166),
+        ),
+        onPressed: () {},
+      ),
+      iconSize: 35,
       color: Color.fromARGB(255, 189, 139, 156),
       itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
         const PopupMenuItem(
