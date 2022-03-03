@@ -30,7 +30,8 @@ class _ViewItemState extends State<ViewItem> {
   Widget build(BuildContext context) {
     return Material(
       child: ListView(children: [
-        /*AppBar(
+        AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
           centerTitle: true,
           iconTheme: IconThemeData(color: Color.fromARGB(255, 197, 230, 166)),
@@ -43,8 +44,8 @@ class _ViewItemState extends State<ViewItem> {
           actions: [
             _popUpMenuButton(),
           ],
-        ),*/
-        Container(
+        ),
+        /*Container(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
@@ -62,7 +63,7 @@ class _ViewItemState extends State<ViewItem> {
               ],
             ),
           ),
-        ),
+        ),*/
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
@@ -71,7 +72,7 @@ class _ViewItemState extends State<ViewItem> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 10, right: 10, left: 10),
+          padding: EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -95,13 +96,13 @@ class _ViewItemState extends State<ViewItem> {
 
   _popUpMenuButton() {
     return PopupMenuButton<int>(
-      icon: IconButton(
+      /*icon: IconButton(
         icon: Icon(
           Icons.more_vert,
           color: Color.fromARGB(255, 197, 230, 166),
         ),
         onPressed: () {},
-      ),
+      ),*/
       iconSize: 35,
       color: Color.fromARGB(255, 189, 139, 156),
       itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[

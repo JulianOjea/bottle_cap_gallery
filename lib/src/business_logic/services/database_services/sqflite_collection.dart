@@ -8,10 +8,11 @@ class SQFliteCollection {
   Future<Database> initializeDB() async {
     String path = await getDatabasesPath();
     return openDatabase(
-      join(path, 'bottlecap.db'),
+      //exists a data base in some devices called bottlecap
+      join(path, 'bottlecap1.db'),
       onCreate: (database, version) async {
         await database.execute(
-          """CREATE TABLE bottlecaptabletest(id INTEGER PRIMARY KEY AUTOINCREMENT, 
+          """CREATE TABLE bottlecaptable0(id INTEGER PRIMARY KEY AUTOINCREMENT, 
           brandname TEXT NOT NULL, type TEXT NOT NULL, description TEXT NOT NULL, 
           country TEXT NOT NULL, city TEXT NOT NULL, releasedate TEXT NOT NULL, 
           image BLOB, folder TEXT NOT NULL, creationdate TEXT NOT NULL)""",
@@ -24,7 +25,7 @@ class SQFliteCollection {
   Future<int> insertItem(Item item) async {
     int result = 0;
     final Database db = await initializeDB();
-    result = await db.insert('bottlecaptabletest', item.toMap());
+    result = await db.insert('bottlecaptable0', item.toMap());
     return result;
   }
 
@@ -32,7 +33,7 @@ class SQFliteCollection {
     int result = 0;
     final Database db = await initializeDB();
     for (var item in items) {
-      result = await db.insert('bottlecaptabletest', item.toMap());
+      result = await db.insert('bottlecaptable0', item.toMap());
     }
     return result;
   }
@@ -40,14 +41,14 @@ class SQFliteCollection {
   Future<List<Item>> retrieveItems() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResult =
-        await db.query('bottlecaptabletest');
+        await db.query('bottlecaptable0');
     return queryResult.map((e) => Item.fromMap(e)).toList();
   }
 
   Future<void> deleteItem(int id) async {
     final db = await initializeDB();
     await db.delete(
-      'bottlecaptabletest',
+      'bottlecaptable0',
       where: "id = ?",
       whereArgs: [id],
     );
@@ -57,7 +58,7 @@ class SQFliteCollection {
     final Database db = await initializeDB();
 
     await db.update(
-      'bottlecaptabletest',
+      'bottlecaptable0',
       item.toMap(),
       where: 'id = ?',
       whereArgs: [item.id],
@@ -66,16 +67,19 @@ class SQFliteCollection {
 
   Future<int> getNumberOfItems() async {
     final Database db = await initializeDB();
-    var result = await db.rawQuery('SELECT COUNT(*) FROM bottlecaptabletest');
+    var result = await db.rawQuery('SELECT COUNT(*) FROM bottlecaptable0');
     int? count = Sqflite.firstIntValue(result);
+    print(count);
     return count!;
   }
 
   Future<void> dropTable() async {
     String path = await getDatabasesPath();
-    await deleteDatabase(path + "tevbyuvbyust.db");
+    await deleteDatabase(
+        path + "bottlecap.db"); //this is the past database should be deleted
     print("deleted");
-    /* final Database db = await initializeDB();
-    await db.execute("DROP TABLE IF EXISTS bottlecaptabletest"); */
+    final Database db = await initializeDB();
+    await db.execute("DROP TABLE IF EXISTS bottlecaptable0");
+    print("deleted2");
   }
 }

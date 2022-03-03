@@ -3,6 +3,7 @@ import 'package:bottle_cap_gallery/src/views/utils/item.dart';
 import 'package:bottle_cap_gallery/src/views/utils/item_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 //Widget that wraps the item and displays it
 class DisplayItem extends StatefulWidget {
@@ -30,9 +31,13 @@ class _DisplayItemState extends State<DisplayItem> {
 
     return Stack(children: [
       Container(
-        color: null,
-        child: Image.memory(_item.image),
-      ),
+          color: null,
+          decoration: new BoxDecoration(
+            image: DecorationImage(
+              image: Image.memory(_item.image).image,
+              fit: BoxFit.fill,
+            ),
+          )),
       Container(
         child: GestureDetector(
           onTap: () {
@@ -41,6 +46,13 @@ class _DisplayItemState extends State<DisplayItem> {
         ),
       ),
     ]);
+  }
+
+  _setImage(Item _item) {
+    if (_item.image == null)
+      return Image.memory(kTransparentImage);
+    else
+      return Image.memory(_item.image).image;
   }
 
   void _navigateAndItemView(BuildContext context, Item item) async {

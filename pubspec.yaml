@@ -41,6 +41,7 @@ dependencies:
   collection: ^1.15.0
   dropdown_button2: ^1.1.1
   camera: ^0.9.4+14
+  path_provider: ^2.0.9
 
 dev_dependencies:
   flutter_test:

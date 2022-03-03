@@ -52,6 +52,15 @@ class _CollectionViewState extends State<CollectionView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /* appBar: AppBar(
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                handler.dropTable();
+              },
+              child: Icon(Icons.abc_outlined))
+        ],
+      ),*/
       body: Material(
         child: PageView(
           scrollDirection: Axis.horizontal,
