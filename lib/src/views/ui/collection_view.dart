@@ -8,9 +8,11 @@ import 'package:bottle_cap_gallery/src/views/utils/item_displayer.dart';
 import 'package:collection/collection.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import 'add_edit_item_view.dart';
 
@@ -79,7 +81,7 @@ class _CollectionViewState extends State<CollectionView> {
                     description: '',
                     folder: '',
                     id: -1,
-                    image: Uint8List(0),
+                    image: kTransparentImage,
                     releaseDate: -1,
                     type: ''),
                 "a",

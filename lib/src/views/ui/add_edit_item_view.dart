@@ -411,30 +411,34 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Column(children: [
-        SizedBox(
-          height: 100,
-        ),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         // You must wait until the controller is initialized before displaying the
         // camera preview. Use a FutureBuilder to display a loading spinner until the
         // controller has finished initializing.
-        Container(
-          width: 300,
-          height: 300,
-          child: FutureBuilder<void>(
-            future: _initializeControllerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                // If the Future is complete, display the preview.
-                return CameraPreview(_controller);
-              } else {
-                // Otherwise, display a loading indicator.
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            width: 300,
+            height: 300,
+            child: FutureBuilder<void>(
+              future: _initializeControllerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  // If the Future is complete, display the preview.
+                  return CameraPreview(_controller);
+                } else {
+                  // Otherwise, display a loading indicator.
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
           ),
         ),
+        SizedBox(
+          height: 10,
+        ),
         FloatingActionButton(
+          backgroundColor: Colors.amber,
           // Provide an onPressed callback.
           onPressed: () async {
             // Take the Picture in a try / catch block. If anything goes wrong,
@@ -479,8 +483,7 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-        child: Column(children: [
-      SizedBox(height: 100),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
         width: 300.0,
         height: 300.0,
@@ -494,12 +497,14 @@ class DisplayPictureScreen extends StatelessWidget {
         ),
       ),
       ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.amber)),
         onPressed: () {
           // Close the screen and return "Yep!" as the result.
           Navigator.pop(context);
           Navigator.pop(context, File(imagePath));
         },
-        child: const Text('Yep!'),
+        child: Icon(Icons.check),
       )
     ]));
   }
