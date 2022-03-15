@@ -142,7 +142,8 @@ class _AddEditItemState extends State<AddEditItem> {
             width: 200.0,
             height: 200.0,
             decoration: new BoxDecoration(
-              color: Color.fromARGB(255, 197, 230, 166),
+              //color: Color.fromARGB(255, 197, 230, 166),
+              color: Colors.amber,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(25.0)),
             ),
@@ -150,7 +151,8 @@ class _AddEditItemState extends State<AddEditItem> {
           Icon(
             Icons.add_a_photo,
             size: 50.0,
-            color: Color.fromARGB(255, 189, 139, 156),
+            //color: Color.fromARGB(255, 189, 139, 156),
+            color: Colors.white,
           ),
           Container(
             width: 300.0,
@@ -169,7 +171,8 @@ class _AddEditItemState extends State<AddEditItem> {
         ],
       ),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 189, 139, 156),
+        //color: Color.fromARGB(255, 189, 139, 156),
+        color: Colors.white,
       ),
     );
   }
@@ -179,24 +182,21 @@ class _AddEditItemState extends State<AddEditItem> {
     return Container(
       //padding: EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
-        style: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+        style: TextStyle(color: Colors.black),
         initialValue: initialValue,
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
-            borderSide: const BorderSide(
-                color: Color.fromARGB(255, 197, 230, 166), width: 0.0),
+            borderSide: const BorderSide(color: Colors.black, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
             borderSide: BorderSide(
-              color: Color.fromARGB(255, 197, 230, 166),
+              color: Colors.amber,
             ),
           ),
-          labelStyle: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+          labelStyle: TextStyle(color: Colors.black),
           border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color.fromARGB(255, 197, 230, 166),
-            ),
+            borderSide: BorderSide(color: Colors.black),
           ),
           labelText: labelText,
         ),
@@ -218,20 +218,19 @@ class _AddEditItemState extends State<AddEditItem> {
       //padding: EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
         keyboardType: TextInputType.number,
-        style: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+        style: TextStyle(color: Colors.black),
         initialValue: initialReleaseDate,
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
-            borderSide: const BorderSide(
-                color: Color.fromARGB(255, 197, 230, 166), width: 0.0),
+            borderSide: const BorderSide(color: Colors.black, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
             borderSide: BorderSide(
-              color: Color.fromARGB(255, 197, 230, 166),
+              color: Colors.amber,
             ),
           ),
-          labelStyle: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+          labelStyle: TextStyle(color: Colors.black),
           border: OutlineInputBorder(),
           labelText: labelText,
         ),
@@ -293,8 +292,7 @@ class _AddEditItemState extends State<AddEditItem> {
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(
-                Color.fromARGB(255, 197, 230, 166))),
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.amber)),
         onPressed: () {
           if (this._formKey.currentState!.validate()) {
             if (widget.flag == "a") {
@@ -308,11 +306,12 @@ class _AddEditItemState extends State<AddEditItem> {
               var collection = context.read<Collection>();
               collection.edit(widget.item);
               print("edito el item");
+              print(widget.item.country);
               widget.onButtonTapped(0, widget.editContext);
             }
           }
         },
-        child: Icon(Icons.check, color: Color.fromARGB(255, 189, 139, 156)));
+        child: Icon(Icons.check, color: Colors.white));
   }
 
   _typeAheadFormField(
@@ -325,20 +324,19 @@ class _AddEditItemState extends State<AddEditItem> {
       hideOnLoading: true,
       hideOnError: true,
       textFieldConfiguration: TextFieldConfiguration(
-          style: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+          style: TextStyle(color: Colors.black),
           controller: typeAheadController,
           decoration: InputDecoration(
               enabledBorder: const OutlineInputBorder(
-                borderSide: const BorderSide(
-                    color: Color.fromARGB(255, 197, 230, 166), width: 0.0),
+                borderSide: const BorderSide(color: Colors.black, width: 0.0),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25.0),
                 borderSide: BorderSide(
-                  color: Color.fromARGB(255, 197, 230, 166),
+                  color: Colors.amber,
                 ),
               ),
-              labelStyle: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
               labelText: labelText)),
       suggestionsCallback: (pattern) {

@@ -34,13 +34,11 @@ class _ViewItemState extends State<ViewItem> {
           automaticallyImplyLeading: false,
           elevation: 0,
           centerTitle: true,
-          iconTheme: IconThemeData(color: Color.fromARGB(255, 197, 230, 166)),
+          iconTheme: IconThemeData(color: Colors.amber),
           title: Text(widget.item.brandName,
-              style: TextStyle(
-                  color: Color.fromARGB(255, 197, 230, 166), fontSize: 30)),
-          backgroundColor: Color.fromARGB(255, 189, 139, 156),
-          actionsIconTheme:
-              IconThemeData(color: Color.fromARGB(255, 197, 230, 166)),
+              style: TextStyle(color: Colors.black, fontSize: 30)),
+          backgroundColor: Colors.white,
+          actionsIconTheme: IconThemeData(color: Colors.amber),
           actions: [
             _popUpMenuButton(),
           ],
@@ -104,15 +102,15 @@ class _ViewItemState extends State<ViewItem> {
         onPressed: () {},
       ),*/
       iconSize: 35,
-      color: Color.fromARGB(255, 189, 139, 156),
+      color: Colors.white,
       itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
         const PopupMenuItem(
-          textStyle: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+          textStyle: TextStyle(color: Colors.amber),
           value: 1,
           child: Text('Eliminar'),
         ),
         const PopupMenuItem(
-          textStyle: TextStyle(color: Color.fromARGB(255, 197, 230, 166)),
+          textStyle: TextStyle(color: Colors.amber),
           value: 2,
           child: Text('Editar'),
         ),
@@ -136,19 +134,19 @@ class _ViewItemState extends State<ViewItem> {
     return showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Color.fromARGB(255, 189, 139, 156),
+        backgroundColor: Colors.white,
         title: Text('¿Seguro que  quieres eliminar este objeto?',
-            style: TextStyle(color: Color.fromARGB(255, 197, 230, 166))),
+            style: TextStyle(color: Colors.black)),
         content: Text('Esta acción es permanente',
-            style: TextStyle(color: Color.fromARGB(255, 197, 230, 166))),
+            style: TextStyle(color: Colors.black)),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(
               context,
               'Cancelar',
             ),
-            child: const Text('Cancelar',
-                style: TextStyle(color: Color.fromARGB(255, 197, 230, 166))),
+            child:
+                const Text('Cancelar', style: TextStyle(color: Colors.black)),
           ),
           TextButton(
             onPressed: () {
@@ -156,7 +154,7 @@ class _ViewItemState extends State<ViewItem> {
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
             child: const Text('Lo entiendo y acepto las consecuencias',
-                style: TextStyle(color: Color.fromARGB(255, 147, 22, 33))),
+                style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
