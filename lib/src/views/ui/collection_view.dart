@@ -43,6 +43,7 @@ class _CollectionViewState extends State<CollectionView> {
   String dropdownValue = "Por defecto";
 
   Uint8List? noImage;
+  Image? galleryIcon;
 
   @override
   void initState() {
@@ -58,6 +59,7 @@ class _CollectionViewState extends State<CollectionView> {
   loadAsset() async {
     noImage =
         (await rootBundle.load('assets/no_image.jpg')).buffer.asUint8List();
+    galleryIcon = Image(image: AssetImage('assets/bottle_cap_icon.png'));
   }
 
   @override
@@ -121,10 +123,7 @@ class _CollectionViewState extends State<CollectionView> {
     return SliverAppBar(
       //backgroundColor: Color.fromARGB(255, 189, 139, 156),
       backgroundColor: Colors.white,
-      title: Text("Bottle Cap Gallery!!",
-          style: TextStyle(
-              color: //Color.fromARGB(255, 197, 230, 166)
-                  Colors.amber)),
+      leading: Padding(padding: EdgeInsets.all(6.0), child: galleryIcon),
       actions: [
         _onSelectedSortOrder(),
       ],
