@@ -10,7 +10,7 @@ Main operations supported on the app:
 - [Delete bottle cap]
 - [Edit bottle cap]
 - [View collection]
-- [(TODO) Sort by field]
+- [Sort by field]
 
 One of the main challenges of the app is to store the most relevant data of a bottle cap, as is a personal collection,
 this data will be introduced by the user. Therefore the next data will be stored for each bottle cap:
