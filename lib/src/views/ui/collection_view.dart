@@ -29,6 +29,8 @@ import 'add_edit_item_view.dart';
 
 //Add Item View:
 //Uses AddEditItem class to get the information of the new item and saving it into the gallery.
+double _scaleFactor = 2.0;
+double _baseScaleFactor = 2.0;
 
 class CollectionView extends StatefulWidget {
   CollectionView({Key? key}) : super(key: key);
@@ -75,30 +77,55 @@ class _CollectionViewState extends State<CollectionView> {
         ],
       ),*/
       body: Material(
-        child: PageView(
-          scrollDirection: Axis.horizontal,
-          controller: controller,
-          onPageChanged: (index) {
-            setState(() {});
+        child: GestureDetector(
+          onScaleStart: (details) {
+            if (_scaleFactor < 1) {
+              _baseScaleFactor = 1;
+            } else if (_scaleFactor > 4) {
+              _baseScaleFactor = 4;
+            } else {
+              _baseScaleFactor = _scaleFactor;
+              ;
+            }
+            _baseScaleFactor = _scaleFactor;
           },
-          children: <Widget>[
-            AddEditItem(
-                onButtonTapped,
-                Item(
-                    brandName: '',
-                    city: '',
-                    country: '',
-                    creationDate: DateTime.now(),
-                    description: '',
-                    folder: '',
-                    id: -1,
-                    image: noImage ?? kTransparentImage,
-                    releaseDate: -1,
-                    type: ''),
-                "a",
-                context),
-            _selectMainView(),
-          ],
+          onScaleUpdate: (details) {
+            setState(() {
+              if (_scaleFactor < 1) {
+                _scaleFactor = 1;
+              } else if (_scaleFactor > 4) {
+                _scaleFactor = 4;
+              } else {
+                _scaleFactor = _baseScaleFactor * details.scale;
+              }
+              print(_scaleFactor);
+            });
+          },
+          child: PageView(
+            scrollDirection: Axis.horizontal,
+            controller: controller,
+            onPageChanged: (index) {
+              setState(() {});
+            },
+            children: <Widget>[
+              AddEditItem(
+                  onButtonTapped,
+                  Item(
+                      brandName: '',
+                      city: '',
+                      country: '',
+                      creationDate: DateTime.now(),
+                      description: '',
+                      folder: '',
+                      id: -1,
+                      image: noImage ?? kTransparentImage,
+                      releaseDate: -1,
+                      type: ''),
+                  "a",
+                  context),
+              _selectMainView(),
+            ],
+          ),
         ),
       ),
     );
@@ -306,11 +333,20 @@ class _ItemSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverGrid.count(
-      crossAxisCount: 2,
+      crossAxisCount: setScaleFactor(),
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
       children: _auxTest(context),
     );
+  }
+
+  int setScaleFactor() {
+    if (_scaleFactor < 1) {
+      return 1;
+    } else if (_scaleFactor >= 1 && _scaleFactor < 4) {
+      return _scaleFactor.toInt();
+    } else
+      return 4;
   }
 
   List<DisplayItem> _auxTest(BuildContext context) {
