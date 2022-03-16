@@ -305,7 +305,7 @@ class _AddEditItemState extends State<AddEditItem> {
             if (widget.flag == "e") {
               var collection = context.read<Collection>();
               collection.edit(widget.item);
-              print("edito el item");
+              print("HE EDITADO EL PAIS");
               print(widget.item.country);
               widget.onButtonTapped(0, widget.editContext);
             }
@@ -343,13 +343,8 @@ class _AddEditItemState extends State<AddEditItem> {
         return list.getSuggestions(pattern);
       },
       itemBuilder: (context, String suggestion) {
-        if (labelText == "Bebida") {
-          widget.item.type = suggestion;
-        } else if (labelText == "País") {
-          widget.item.country = suggestion;
-        }
         return ListTile(
-          textColor: Color.fromARGB(255, 197, 230, 166),
+          textColor: Colors.black,
           title: Text(suggestion),
         );
       },
@@ -358,6 +353,7 @@ class _AddEditItemState extends State<AddEditItem> {
       },
       onSuggestionSelected: (String suggestion) {
         typeAheadController.text = suggestion;
+        widget.item.country = suggestion;
       },
       validator: (value) {
         return list.validate(value);
