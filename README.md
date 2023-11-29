@@ -24,4 +24,6 @@ this data will be introduced by the user. Therefore the next data will be stored
 
 Preview of the app:
 
-![alt text](https://github.com/JulianOjea/bottle_cap_gallery/blob/main/preview_images/add_bottle_cap.png?raw=true)
+<p align="center">
+  <img src="/bottle_cap_gallery/preview_images/add_bottle_cap.png" width="100">
+</p>
