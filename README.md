@@ -21,3 +21,7 @@ this data will be introduced by the user. Therefore the next data will be stored
 - [Country]
 - [City]
 - [Release Date]
+
+Preview of the app:
+
+![alt text](https://github.com/JulianOjea/bottle_cap_gallery/blob/main/preview_images/add_bottle_cap.png?raw=true)
