@@ -25,5 +25,8 @@ this data will be introduced by the user. Therefore the next data will be stored
 Preview of the app:
 
 <p align="center">
-  <img src="/preview_images/add_bottle_cap.png" width="300">
+  <img src="/preview_images/list_bottle_caps.png" width="250">
+  <img src="/preview_images/add_bottle_cap.png" width="250">
+  <img src="/preview_images/filter_by_country.png" width="250">
+  <img src="/preview_images/bottle_cap_detail.png" width="250">
 </p>
